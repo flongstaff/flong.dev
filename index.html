@@ -265,18 +265,39 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1rem;
+            align-items: center;
         }
 
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.3s ease;
             font-weight: 500;
+            padding: 0.4rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
+            box-sizing: border-box;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            color: var(--text);
+            background: rgba(236, 72, 153, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        }
+
+        [data-theme="light"] .nav-links a:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         .theme-toggle {
@@ -1086,11 +1107,18 @@
 
         @media (max-width: 768px) {
             .nav-links {
-                gap: 1rem;
+                gap: 0.5rem;
             }
             
             .nav-links a {
                 font-size: 0.9rem;
+                padding: 0.3rem 0.8rem;
+                min-height: 36px;
+            }
+            
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
             }
             
             .hero {
@@ -1144,7 +1172,20 @@
 
         @media (max-width: 480px) {
             .nav-links {
-                display: none;
+                gap: 0.3rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.6rem;
+                min-height: 32px;
+            }
+            
+            .theme-toggle {
+                width: 32px;
+                height: 32px;
             }
             
             .hero {

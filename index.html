@@ -485,10 +485,14 @@
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--primary);
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .skills-grid {
@@ -542,15 +546,28 @@
         .support { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 
         .skill-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
             color: var(--text);
         }
 
         .skill-list {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .skill-item {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-item:last-child {
+            border-bottom: none;
         }
 
         /* Experience Section */
@@ -587,9 +604,10 @@
 
         .job-title {
             color: var(--primary);
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
         .job-period {
@@ -772,9 +790,10 @@
 
         .project-card h3 {
             color: var(--text);
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 0.8rem;
+            letter-spacing: -0.01em;
         }
 
         .project-description {
@@ -1303,23 +1322,21 @@
                     <div class="skill-icon sysadmin">🖥️</div>
                     <h3>System Administration</h3>
                     <div class="skill-list">
-                        Proxmox Virtualization & Clustering<br>
-                        Windows Server 2003/2008/2012<br>
-                        Active Directory & Terminal Server<br>
-                        Citrix XenServer Environments<br>
-                        1,000+ Workstation Management
+                        <div class="skill-item">Proxmox Virtualization</div>
+                        <div class="skill-item">Windows Server</div>
+                        <div class="skill-item">Active Directory</div>
+                        <div class="skill-item">1,000+ Workstations</div>
                     </div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon cloud">☁️</div>
-                    <h3>Cloud & Platform Management</h3>
+                    <h3>Cloud & Platform</h3>
                     <div class="skill-list">
-                        Microsoft Azure & Office 365<br>
-                        Retool Platform Administration<br>
-                        Cloudflare Integration<br>
-                        Docker Containerization<br>
-                        Apple Store App Deployment
+                        <div class="skill-item">Microsoft Azure</div>
+                        <div class="skill-item">Retool Administration</div>
+                        <div class="skill-item">Docker & Cloudflare</div>
+                        <div class="skill-item">App Store Deployment</div>
                     </div>
                 </div>
 
@@ -1327,23 +1344,21 @@
                     <div class="skill-icon devops">⚙️</div>
                     <h3>DevOps & Automation</h3>
                     <div class="skill-list">
-                        PowerShell Automation Scripts<br>
-                        JavaScript & React Development<br>
-                        Security Monitoring & Analysis<br>
-                        Infrastructure Cost Optimization<br>
-                        Network Design & Implementation
+                        <div class="skill-item">PowerShell Automation</div>
+                        <div class="skill-item">JavaScript & React</div>
+                        <div class="skill-item">Security Monitoring</div>
+                        <div class="skill-item">Infrastructure Design</div>
                     </div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon support">🛠️</div>
-                    <h3>Enterprise IT Support</h3>
+                    <h3>IT Support</h3>
                     <div class="skill-list">
-                        OTRS Ticketing (95% Satisfaction)<br>
-                        Microsoft Intune Management<br>
-                        Multi-Channel Support Delivery<br>
-                        Hardware Restoration & E-waste<br>
-                        Technical Training & Documentation
+                        <div class="skill-item">OTRS Ticketing</div>
+                        <div class="skill-item">Microsoft Intune</div>
+                        <div class="skill-item">Multi-Channel Support</div>
+                        <div class="skill-item">Hardware Restoration</div>
                     </div>
                 </div>
             </div>
@@ -1489,8 +1504,26 @@
                     </div>
 
                     <div class="timeline-item">
+                        <h3 class="job-title">IT Systems Administrator</h3>
+                        <p class="job-period">Sep 2022 - Dec 2023 · Perth, Western Australia · Full-time</p>
+                        <ul class="achievements">
+                            <li>Infrastructure Management: Led IT operations for organizational systems and network infrastructure</li>
+                            <li>System Optimization: Improved server performance and network reliability across multiple locations</li>
+                            <li>Security Implementation: Deployed security protocols and monitoring systems for enhanced protection</li>
+                            <li>User Support: Provided comprehensive technical support for staff across various departments</li>
+                            <li>Project Delivery: Successfully managed IT projects from planning to implementation</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">System Administration</span>
+                            <span class="tech-tag">Network Management</span>
+                            <span class="tech-tag">Security Protocols</span>
+                            <span class="tech-tag">Project Management</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
                         <h3 class="job-title">IT Infrastructure Specialist</h3>
-                        <p class="job-period">Government Ministry · Full-time</p>
+                        <p class="job-period">Government Ministry · Feb 2014 - Feb 2018 · Full-time</p>
                         <ul class="achievements">
                             <li>Led comprehensive IT infrastructure management for a government ministry, supporting multiple branch offices</li>
                             <li>Ensured critical system availability for public services across ministry operations</li>
@@ -1516,7 +1549,7 @@
 
                     <div class="timeline-item">
                         <h3 class="job-title">IT Support Specialist</h3>
-                        <p class="job-period">Community Organization</p>
+                        <p class="job-period">Community Organization · Mar 2022 - Sep 2022 · Part-time</p>
                         <ul class="achievements">
                             <li>Provided essential IT infrastructure support in community-focused environment</li>
                             <li>Emphasized sustainable technology solutions and resource optimization</li>

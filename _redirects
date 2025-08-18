@@ -8,6 +8,8 @@ https://www.flong.dev/* https://flong.dev/:splat 301!
 # Security files
 /.well-known/security.txt   /.well-known/security.txt   200
 /humans.txt                 /humans.txt                 200
+/robots.txt                 /robots.txt                 200
+/sitemap.xml                /sitemap.xml                200
 
 # Block access to sensitive files
 /src/*          /404.html   404
@@ -16,5 +18,9 @@ https://www.flong.dev/* https://flong.dev/:splat 301!
 /package.json   /404.html   404
 /wrangler.toml  /404.html   404
 
-# Fallback for SPA
+# Homepage specific rules
+/index.html                 /index.html                 200
+/                          /index.html                 200
+
+# Fallback for SPA (but preserve clean URLs)
 /*   /index.html   200

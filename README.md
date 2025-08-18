@@ -10,23 +10,6 @@ Personal website for Franco Longstaff - IT Systems Administrator, DevOps Expert 
 - Mobile-optimized layout
 - Fast loading with embedded CSS/JS
 
-## Deployment
-
-### Cloudflare Pages (Recommended)
-
-1. Push to GitHub repository
-2. Connect repository to Cloudflare Pages
-3. Set build settings:
-   - Build command: (leave empty - static HTML)
-   - Build output directory: `/`
-   - Root directory: `/`
-
-### GitHub Pages
-
-1. Enable GitHub Pages in repository settings
-2. Set source to "Deploy from a branch"
-3. Select `main` branch and `/` (root) folder
-
 ## Technologies
 
 - HTML5

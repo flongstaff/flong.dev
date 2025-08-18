@@ -9,3 +9,6 @@ routes = [
 [vars]
 FROM_EMAIL = "noreply@flong.dev"
 TO_EMAIL = "hello@flong.dev"
+
+[observability.logs]
+enabled = true

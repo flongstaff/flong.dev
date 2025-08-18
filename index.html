@@ -679,10 +679,13 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 15px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .project-card:hover {
@@ -720,15 +723,16 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             text-align: center;
         }
 
         .github-stats h3 {
             color: var(--text);
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
         }
 
         .github-cards {
@@ -751,8 +755,8 @@
         }
 
         .project-actions {
-            margin-top: 1rem;
-            padding-top: 1rem;
+            margin-top: auto;
+            padding-top: 0.8rem;
             border-top: 1px solid var(--border);
         }
 
@@ -800,15 +804,16 @@
             color: var(--text-muted);
             line-height: 1.5;
             margin-bottom: 1rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            flex-grow: 1;
         }
 
         .project-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
-            padding: 0.8rem;
+            gap: 0.8rem;
+            margin: 0.8rem 0;
+            padding: 0.6rem;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
         }
@@ -818,22 +823,22 @@
         }
 
         .stat-number {
-            font-size: 1.2rem;
-            font-weight: 800;
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--accent);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.1rem;
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
         }
 
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
+            gap: 0.4rem;
+            margin: 1rem 0;
         }
 
 
@@ -1368,13 +1373,12 @@
             <div class="projects-content">
                 <h2 class="section-title">Key Projects</h2>
                 
-                <!-- GitHub Stats Section (Hidden for now) -->
-                <!-- 
+                <!-- GitHub Stats Section -->
                 <div class="github-stats">
                     <h3>GitHub Activity</h3>
                     <div class="github-cards">
-                        <img src="https://github-readme-stats.vercel.app/api?username=flongstaff&show_icons=true&theme=dark&bg_color=0f172a&title_color=00d4ff&text_color=ffffff&icon_color=00d4ff&border_color=334155" alt="GitHub Stats" loading="lazy">
-                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=flongstaff&layout=compact&theme=dark&bg_color=0f172a&title_color=00d4ff&text_color=ffffff&border_color=334155" alt="Top Languages" loading="lazy">
+                        <img src="https://github-readme-stats.vercel.app/api?username=flongstaff&show_icons=true&theme=dark&bg_color=0f172a&title_color=ec4899&text_color=ffffff&icon_color=8b5cf6&border_color=334155" alt="GitHub Stats" loading="lazy">
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=flongstaff&layout=compact&theme=dark&bg_color=0f172a&title_color=ec4899&text_color=ffffff&border_color=334155" alt="Top Languages" loading="lazy">
                     </div>
                     <div class="github-link">
                         <a href="https://github.com/flongstaff" target="_blank" class="btn btn-outline">
@@ -1382,7 +1386,6 @@
                         </a>
                     </div>
                 </div>
-                -->
 
                 <div class="projects-grid">
                     <div class="project-card">
@@ -1482,7 +1485,7 @@
                             <li>Platform Excellence: Administered Retool platform serving 50+ daily users, reducing manual processing time by 60%</li>
                             <li>Infrastructure Leadership: Deployed enterprise network infrastructure achieving 99.9% uptime</li>
                             <li>Cost Optimization: Implemented Proxmox development cluster, reducing infrastructure costs by 30%</li>
-                            <li>Client Success: Conducted 25+ field visits across Perth metropolitan area with exceptional satisfaction ratings</li>
+                            <li>Client Success: Conducted 10+ field visits across regional WA and remote/client office hybrid with exceptional satisfaction ratings</li>
                             <li>System Reliability: Implemented monitoring systems, reducing unplanned downtime by 85%</li>
                             <li>Mobile Innovation: Coordinated Apple Store deployment for white-labeled application</li>
                             <li>Managed web applications using JavaScript and React, enhancing user experience and performance</li>

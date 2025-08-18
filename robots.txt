@@ -1,12 +1,41 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /.wrangler/
+Disallow: /node_modules/
+Disallow: /src/
+
+# Block AI scrapers while allowing search engines
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# Allow legitimate search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot  
+Allow: /
+
+User-agent: Slurp
+Allow: /
 
 # Sitemap
 Sitemap: https://flong.dev/sitemap.xml
 
-# Crawl-delay for respectful crawling
+# Crawl delay for respectful indexing
 Crawl-delay: 1
 
-# Disallow sensitive areas
-Disallow: /web/drafts/
-Disallow: /*.json$
+# Host preference
+Host: https://flong.dev

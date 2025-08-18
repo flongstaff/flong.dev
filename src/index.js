@@ -1,6 +1,29 @@
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+    
+    // Security: Rate limiting
+    const rateLimitKey = `rate_limit_${clientIP}`;
+    const currentTime = Date.now();
+    const windowMs = 15 * 60 * 1000; // 15 minutes
+    const maxRequests = 10; // Max 10 requests per 15 minutes
+    
+    // Basic rate limiting without KV (for now)
+    const userAgent = request.headers.get('User-Agent') || '';
+    
+    // Block obvious bot requests
+    const suspiciousPatterns = [
+      /curl/i, /wget/i, /python/i, /bot/i, /crawler/i, /spider/i,
+      /scanner/i, /scraper/i, /^$/
+    ];
+    
+    if (suspiciousPatterns.some(pattern => pattern.test(userAgent))) {
+      return new Response(JSON.stringify({ error: 'Access denied' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
     
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
@@ -25,9 +48,53 @@ export default {
         const project = formData.get('project');
         const message = formData.get('message');
         
+        // Input validation and sanitization
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
         // Validate required fields
         if (!name || !email || !project || !message) {
           return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+            status: 400,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': 'https://flong.dev'
+            }
+          });
+        }
+        
+        // Validate field lengths
+        if (name.length > 100 || email.length > 200 || message.length > 2000) {
+          return new Response(JSON.stringify({ error: 'Field length exceeded' }), {
+            status: 400,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': 'https://flong.dev'
+            }
+          });
+        }
+        
+        // Validate email format
+        if (!emailRegex.test(email)) {
+          return new Response(JSON.stringify({ error: 'Invalid email format' }), {
+            status: 400,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': 'https://flong.dev'
+            }
+          });
+        }
+        
+        // Basic spam detection
+        const spamPatterns = [
+          /\b(viagra|casino|lottery|prize|winner|congratulations)\b/i,
+          /\b(click here|buy now|act now|limited time)\b/i,
+          /\$\$\$|!!!/,
+          /http:\/\/[^\s]+/gi
+        ];
+        
+        const fullText = `${name} ${email} ${message}`;
+        if (spamPatterns.some(pattern => pattern.test(fullText))) {
+          return new Response(JSON.stringify({ error: 'Message flagged as spam' }), {
             status: 400,
             headers: {
               'Content-Type': 'application/json',

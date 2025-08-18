@@ -1,0 +1,13 @@
+Contact: mailto:hello@flong.dev
+Contact: https://flong.dev/#contact
+Preferred-Languages: en
+Canonical: https://flong.dev/.well-known/security.txt
+Policy: https://flong.dev/#security-policy
+Hiring: https://flong.dev/#contact
+
+# Security Policy
+# If you discover a security vulnerability in this website,
+# please report it responsibly through the contact methods above.
+# Thank you for helping keep flong.dev secure.
+
+Expires: 2026-08-18T12:00:00.000Z

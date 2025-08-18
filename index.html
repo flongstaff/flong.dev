@@ -793,7 +793,7 @@
             border-radius: 12px;
             position: relative;
             overflow: hidden;
-            height: 200px;
+            height: 220px;
             max-width: 280px;
             perspective: 1000px;
             cursor: pointer;
@@ -840,21 +840,21 @@
 
         .project-header {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
             text-align: center;
         }
 
         .project-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
         .project-icon.infrastructure { background: linear-gradient(135deg, #10b981, #059669); }
@@ -863,49 +863,6 @@
         .project-icon.web { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .project-icon.github { background: linear-gradient(135deg, #333, #24292e); }
 
-        /* GitHub Stats */
-        .github-stats {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .github-stats h3 {
-            color: var(--text);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-
-        .github-cards {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 0.8rem;
-        }
-
-        .github-cards img {
-            border-radius: 8px;
-            max-width: 100%;
-            height: auto;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            max-height: 120px;
-        }
-
-        .github-link {
-            margin-top: 0.5rem;
-        }
-
-        .github-link .btn {
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-        }
 
         .project-actions {
             margin-top: auto;
@@ -920,11 +877,12 @@
         }
 
         .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 16px;
+            font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
+            flex-shrink: 0;
         }
 
         .status-badge.live {
@@ -953,19 +911,23 @@
 
         .project-card h3 {
             color: var(--text);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             letter-spacing: -0.01em;
-            line-height: 1.3;
+            line-height: 1.2;
             text-align: center;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .project-description {
             color: var(--text-muted);
-            line-height: 1.4;
-            font-size: 0.75rem;
+            line-height: 1.3;
+            font-size: 0.7rem;
             text-align: center;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .project-details {
@@ -987,10 +949,12 @@
         
         .project-details li {
             color: var(--text-muted);
-            font-size: 0.75rem;
-            margin-bottom: 0.3rem;
-            padding-left: 1rem;
+            font-size: 0.65rem;
+            margin-bottom: 0.2rem;
+            padding-left: 0.8rem;
             position: relative;
+            line-height: 1.2;
+            overflow-wrap: break-word;
         }
         
         .project-details li::before {
@@ -1008,8 +972,8 @@
         }
 
         .tech-tag {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
+            font-size: 0.6rem;
+            padding: 0.15rem 0.4rem;
         }
 
 
@@ -1345,7 +1309,7 @@
             
             .project-card {
                 max-width: 100%;
-                height: 180px;
+                height: 200px;
             }
             
             /* Disable flip on mobile, show front only */
@@ -1366,10 +1330,6 @@
                 grid-template-columns: 1fr 1fr;
             }
             
-            .github-cards {
-                flex-direction: column;
-                align-items: center;
-            }
             
             .response-time {
                 justify-content: center;
@@ -1426,17 +1386,24 @@
             }
             
             .project-card h3 {
-                font-size: 0.85rem;
+                font-size: 0.75rem;
+                line-height: 1.1;
             }
             
             .project-description {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+                line-height: 1.2;
             }
             
             .project-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+            
+            .status-badge {
+                font-size: 0.55rem;
+                padding: 0.15rem 0.4rem;
             }
             
             .timeline-item {
@@ -1583,18 +1550,6 @@
             <div class="projects-content">
                 <div class="projects-header">
                     <h2 class="section-title" data-en="Key Projects" data-es="Proyectos Clave">Key Projects</h2>
-                    <!-- GitHub Stats Section -->
-                    <div class="github-stats">
-                        <h3 data-en="GitHub Activity" data-es="Actividad GitHub">GitHub Activity</h3>
-                        <div class="github-cards">
-                            <img src="https://github-readme-stats.vercel.app/api?username=flongstaff&show_icons=true&theme=dark&bg_color=0f172a&title_color=ec4899&text_color=ffffff&icon_color=8b5cf6&border_color=334155&count_private=true" alt="GitHub Stats" loading="lazy">
-                        </div>
-                        <div class="github-link">
-                            <a href="https://github.com/flongstaff" target="_blank" class="btn btn-outline">
-                                <span data-en="🔗 View Profile" data-es="🔗 Ver Perfil">🔗 View Profile</span>
-                            </a>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="projects-grid">

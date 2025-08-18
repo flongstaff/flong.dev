@@ -1,0 +1,17 @@
+{
+  "name": "flong-dev-contact-form",
+  "version": "1.0.0",
+  "description": "Contact form handler for flong.dev using Cloudflare Workers",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler publish",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "keywords": ["cloudflare", "workers", "contact-form", "email"],
+  "author": "Franco Longstaff <hello@flong.dev>",
+  "license": "MIT"
+}

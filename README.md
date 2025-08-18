@@ -37,5 +37,5 @@ Personal website for Franco Longstaff - IT Systems Administrator, DevOps Expert 
 ## Contact
 
 - Email: hello@flong.dev
-- GitHub: [github.com/flong](https://github.com/flong)
+- GitHub: [github.com/flongstaff](https://github.com/flongstaff)
 - LinkedIn: [linkedin.com/in/flong](https://linkedin.com/in/flong)

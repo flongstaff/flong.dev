@@ -1,0 +1,11 @@
+name = "flong-dev-contact-form"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+routes = [
+  { pattern = "flong.dev/api/*", zone_name = "flong.dev" }
+]
+
+[vars]
+FROM_EMAIL = "noreply@flong.dev"
+TO_EMAIL = "hello@flong.dev"

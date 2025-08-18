@@ -32,3 +32,8 @@
 
 /api/*
   Cache-Control: no-cache, no-store, must-revalidate
+
+# Google Search Console verification file
+/google34071dbdf8793242.html
+  Content-Type: text/html
+  Cache-Control: public, max-age=3600

@@ -44,7 +44,7 @@
     
     <!-- Schema.org markup for improved search results -->
     <meta name="google-site-verification" content="google34071dbdf8793242" />
-    <meta name="msvalidate.01" content="" />
+    <meta name="msvalidate.01" content="7C5E6C9E59FB41C4CF7A1C992A15FE34" />
     
     <!-- Additional indexing hints -->
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -659,8 +659,20 @@
 
         /* Experience Section */
         .experience {
-            padding: 5rem 2rem;
-            background: rgba(255, 255, 255, 0.02);
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.05) 100%);
+            position: relative;
+        }
+        
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+            opacity: 0.3;
         }
 
         .experience-content {
@@ -745,8 +757,8 @@
 
         /* Projects Section */
         .projects {
-            padding: 5rem 2rem;
-            background: rgba(255, 255, 255, 0.01);
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.03) 100%);
         }
 
         .projects-content {
@@ -766,10 +778,10 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
-            margin-top: 2rem;
-            max-width: 900px;
+            margin-top: 1.5rem;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -779,14 +791,45 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem;
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            height: 200px;
+            max-width: 280px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .project-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover .project-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .project-card-front,
+        .project-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            max-width: 320px;
+            justify-content: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+        }
+        
+        .project-card-back {
+            transform: rotateY(180deg);
         }
 
         .project-card:hover {
@@ -797,19 +840,21 @@
 
         .project-header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .project-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .project-icon.infrastructure { background: linear-gradient(135deg, #10b981, #059669); }
@@ -908,47 +953,51 @@
 
         .project-card h3 {
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             letter-spacing: -0.01em;
             line-height: 1.3;
+            text-align: center;
         }
 
         .project-description {
             color: var(--text-muted);
             line-height: 1.4;
-            margin-bottom: 0.8rem;
-            font-size: 0.8rem;
-            flex-grow: 1;
-        }
-
-        .project-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.6rem;
-            margin: 0.6rem 0;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-        }
-
-        .stat {
+            font-size: 0.75rem;
             text-align: center;
         }
 
-        .stat-number {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.1rem;
-            display: block;
+        .project-details {
+            text-align: left;
         }
-
-        .stat-label {
-            font-size: 0.6rem;
+        
+        .project-details h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .project-details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .project-details li {
             color: var(--text-muted);
-            display: block;
+            font-size: 0.75rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .project-details li::before {
+            content: '▸';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
         }
 
         .tech-stack {
@@ -1236,9 +1285,9 @@
         /* Responsive */
         @media (max-width: 1024px) {
             .projects-grid {
-                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
                 gap: 0.8rem;
-                max-width: 800px;
+                max-width: 750px;
             }
             
             .skills-grid {
@@ -1296,6 +1345,16 @@
             
             .project-card {
                 max-width: 100%;
+                height: 180px;
+            }
+            
+            /* Disable flip on mobile, show front only */
+            .project-card:hover .project-card-inner {
+                transform: none;
+            }
+            
+            .project-card-back {
+                display: none;
             }
             
             .skills-grid {
@@ -1367,11 +1426,17 @@
             }
             
             .project-card h3 {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
             
             .project-description {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
+            }
+            
+            .project-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
             
             .timeline-item {
@@ -1534,90 +1599,100 @@
 
                 <div class="projects-grid">
                     <div class="project-card">
-                        <div class="project-header">
-                            <div class="project-icon infrastructure">🏗️</div>
-                            <span class="status-badge live">Live</span>
-                        </div>
-                        <h3 data-en="Enterprise Proxmox Infrastructure" data-es="Infraestructura Empresarial Proxmox">Enterprise Proxmox Infrastructure</h3>
-                        <p class="project-description" data-en="Complete enterprise infrastructure with Proxmox virtualization, Cloudflare tunneling, and Docker containerization. 99.9% uptime." data-es="Infraestructura empresarial completa con virtualización Proxmox, túneles Cloudflare y contenedorización Docker. 99.9% de tiempo activo.">
-                            Complete enterprise infrastructure with Proxmox virtualization, Cloudflare tunneling, and Docker containerization. 99.9% uptime.
-                        </p>
-                        <div class="project-stats">
-                            <div class="stat">
-                                <div class="stat-number">50+</div>
-                                <div class="stat-label" data-en="Daily Users" data-es="Usuarios Diarios">Daily Users</div>
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-header">
+                                    <div class="project-icon infrastructure">🏗️</div>
+                                    <span class="status-badge live">Live</span>
+                                </div>
+                                <h3 data-en="Enterprise Proxmox Infrastructure" data-es="Infraestructura Empresarial Proxmox">Enterprise Proxmox Infrastructure</h3>
+                                <p class="project-description" data-en="Complete enterprise infrastructure with Proxmox virtualization and Docker." data-es="Infraestructura empresarial completa con virtualización Proxmox y Docker.">
+                                    Complete enterprise infrastructure with Proxmox virtualization and Docker.
+                                </p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-number">30%</div>
-                                <div class="stat-label" data-en="Cost Reduction" data-es="Reducción de Costos">Cost Reduction</div>
+                            <div class="project-card-back">
+                                <div class="project-details">
+                                    <h4 data-en="Key Features:" data-es="Características Clave:">Key Features:</h4>
+                                    <ul>
+                                        <li data-en="99.9% uptime reliability" data-es="99.9% de confiabilidad">99.9% uptime reliability</li>
+                                        <li data-en="50+ daily active users" data-es="50+ usuarios activos diarios">50+ daily active users</li>
+                                        <li data-en="30% cost reduction" data-es="30% reducción de costos">30% cost reduction</li>
+                                        <li data-en="Full Docker integration" data-es="Integración completa Docker">Full Docker integration</li>
+                                        <li data-en="Cloudflare security" data-es="Seguridad Cloudflare">Cloudflare security</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Proxmox</span>
+                                        <span class="tech-tag">Docker</span>
+                                        <span class="tech-tag">Cloudflare</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="project-actions">
-                            <a href="#contact" class="btn btn-outline" data-en="Learn More" data-es="Saber Más">Learn More</a>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Proxmox</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">Cloudflare</span>
                         </div>
                     </div>
 
                     <div class="project-card">
-                        <div class="project-header">
-                            <div class="project-icon platform">⚡</div>
-                            <span class="status-badge production">Production</span>
-                        </div>
-                        <h3 data-en="Retool Platform Administration" data-es="Administración Plataforma Retool">Retool Platform Administration</h3>
-                        <p class="project-description" data-en="Enterprise platform serving 50+ daily users. Reduced manual processing time by 60% through automation." data-es="Plataforma empresarial que sirve a más de 50 usuarios diarios. Redujo el tiempo de procesamiento manual en un 60% mediante automatización.">
-                            Enterprise platform serving 50+ daily users. Reduced manual processing time by 60% through automation.
-                        </p>
-                        <div class="project-stats">
-                            <div class="stat">
-                                <div class="stat-number">50+</div>
-                                <div class="stat-label" data-en="Daily Users" data-es="Usuarios Diarios">Daily Users</div>
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-header">
+                                    <div class="project-icon platform">⚡</div>
+                                    <span class="status-badge production">Production</span>
+                                </div>
+                                <h3 data-en="Retool Platform Administration" data-es="Administración Plataforma Retool">Retool Platform Administration</h3>
+                                <p class="project-description" data-en="Enterprise platform serving 50+ daily users with automation workflows." data-es="Plataforma empresarial que sirve a más de 50 usuarios diarios con flujos automatizados.">
+                                    Enterprise platform serving 50+ daily users with automation workflows.
+                                </p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-number">60%</div>
-                                <div class="stat-label" data-en="Time Saved" data-es="Tiempo Ahorrado">Time Saved</div>
+                            <div class="project-card-back">
+                                <div class="project-details">
+                                    <h4 data-en="Achievements:" data-es="Logros:">Achievements:</h4>
+                                    <ul>
+                                        <li data-en="60% time reduction" data-es="60% reducción de tiempo">60% time reduction</li>
+                                        <li data-en="50+ daily active users" data-es="50+ usuarios activos diarios">50+ daily active users</li>
+                                        <li data-en="Custom JavaScript integrations" data-es="Integraciones JavaScript personalizadas">Custom JavaScript integrations</li>
+                                        <li data-en="API workflow automation" data-es="Automatización de flujos API">API workflow automation</li>
+                                        <li data-en="Real-time data processing" data-es="Procesamiento de datos en tiempo real">Real-time data processing</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Retool</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">APIs</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="project-actions">
-                            <a href="#contact" class="btn btn-outline" data-en="Discuss Project" data-es="Discutir Proyecto">Discuss Project</a>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Retool</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">APIs</span>
                         </div>
                     </div>
 
                     <div class="project-card">
-                        <div class="project-header">
-                            <div class="project-icon github">🔗</div>
-                            <span class="status-badge live">Live</span>
-                        </div>
-                        <h3 data-en="flong.dev Portfolio" data-es="Portfolio flong.dev">flong.dev Portfolio</h3>
-                        <p class="project-description" data-en="Modern responsive portfolio website built with HTML5, CSS3, and JavaScript. Deployed on Cloudflare Pages with automatic CI/CD." data-es="Sitio web de portfolio moderno y responsivo construido con HTML5, CSS3 y JavaScript. Desplegado en Cloudflare Pages con CI/CD automático.">
-                            Modern responsive portfolio website built with HTML5, CSS3, and JavaScript. Deployed on Cloudflare Pages with automatic CI/CD.
-                        </p>
-                        <div class="project-stats">
-                            <div class="stat">
-                                <div class="stat-number">&lt;1s</div>
-                                <div class="stat-label" data-en="Load Time" data-es="Tiempo de Carga">Load Time</div>
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-header">
+                                    <div class="project-icon github">🔗</div>
+                                    <span class="status-badge live">Live</span>
+                                </div>
+                                <h3 data-en="flong.dev Portfolio" data-es="Portfolio flong.dev">flong.dev Portfolio</h3>
+                                <p class="project-description" data-en="Modern responsive portfolio with bilingual support and advanced SEO." data-es="Portfolio moderno y responsivo con soporte bilingüe y SEO avanzado.">
+                                    Modern responsive portfolio with bilingual support and advanced SEO.
+                                </p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-number">95+</div>
-                                <div class="stat-label" data-en="Lighthouse" data-es="Lighthouse">Lighthouse</div>
+                            <div class="project-card-back">
+                                <div class="project-details">
+                                    <h4 data-en="Features:" data-es="Características:">Features:</h4>
+                                    <ul>
+                                        <li data-en="<1s load time" data-es="<1s tiempo de carga"><1s load time</li>
+                                        <li data-en="95+ Lighthouse score" data-es="95+ puntuación Lighthouse">95+ Lighthouse score</li>
+                                        <li data-en="Spanish/English toggle" data-es="Cambio Español/Inglés">Spanish/English toggle</li>
+                                        <li data-en="Contact form integration" data-es="Integración formulario contacto">Contact form integration</li>
+                                        <li data-en="GitHub Actions deployment" data-es="Despliegue GitHub Actions">GitHub Actions deployment</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                        <span class="tech-tag">Cloudflare</span>
+                                    </div>
+                                    <a href="https://github.com/flongstaff/flong.dev" class="btn btn-outline" target="_blank" data-en="View Source" data-es="Ver Código" style="margin-top: 0.5rem; width: 100%; font-size: 0.75rem; padding: 0.4rem;">View Source</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="tech-stack">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Cloudflare</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/flongstaff/flong.dev" class="btn btn-outline" target="_blank" data-en="View Source" data-es="Ver Código">View Source</a>
                         </div>
                     </div>
                 </div>

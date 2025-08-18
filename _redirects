@@ -11,6 +11,9 @@ https://www.flong.dev/* https://flong.dev/:splat 301!
 /robots.txt                 /robots.txt                 200
 /sitemap.xml                /sitemap.xml                200
 
+# Google Search Console verification
+/google34071dbdf8793242.html /google34071dbdf8793242.html 200
+
 # Block access to sensitive files
 /src/*          /404.html   404
 /.wrangler/*    /404.html   404

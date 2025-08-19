@@ -16,8 +16,12 @@ const SECURITY_HEADERS = {
   'X-Frame-Options': 'DENY',
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload'
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), screen-wake-lock=(), web-share=()',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Resource-Policy': 'cross-origin',
+  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://www.clarity.ms https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.resend.com https://www.google-analytics.com https://region1.google-analytics.com https://www.clarity.ms; frame-ancestors 'none'; upgrade-insecure-requests;"
 };
 
 export default {
@@ -52,7 +56,8 @@ export default {
       }
 
       // Default: Pass through to origin
-      return addSecurityHeaders(await fetch(request));
+      const response = await fetch(request);
+      return addSecurityHeaders(response);
       
     } catch (error) {
       console.error('Worker error:', error);

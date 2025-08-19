@@ -26,8 +26,18 @@ RATE_LIMIT_ENABLED = true
 [observability.logs]
 enabled = true
 
-# KV Namespace for rate limiting (optional - can be added later)
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = "your_kv_namespace_id"
-# preview_id = "your_preview_kv_namespace_id"
+# KV Namespaces for data storage
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "7ec949f8903a41a08f7a8c010c1fe2ff"
+preview_id = "1dafccbdac3e4d039c11146782290f3b"
+
+[[kv_namespaces]]
+binding = "ANALYTICS"
+id = "993d2e06a23949c9b087102d7babdfba"
+preview_id = "d771c4c937264edaa81c65ea60adedaf"
+
+[[kv_namespaces]]
+binding = "CONTACTS"
+id = "5529065343fb411b9f3c9e5f8028520d"
+preview_id = "08df2d6a214145caa331366fb07d2240"

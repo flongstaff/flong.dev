@@ -1,10 +1,10 @@
-# Cloudflare Workers configuration
+# Cloudflare Workers Configuration for flong.dev API
 name = "flong-dev-api"
 main = "src/api-worker.js"
 compatibility_date = "2024-08-15"
 compatibility_flags = ["nodejs_compat"]
 
-# Routes for enhanced API functionality
+# Routes - API endpoints on the domain
 routes = [
   { pattern = "flong.dev/api/*", zone_name = "flong.dev" },
   { pattern = "flong.dev/health", zone_name = "flong.dev" },
@@ -19,5 +19,15 @@ ENVIRONMENT = "production"
 API_VERSION = "1.0.0"
 RATE_LIMIT_ENABLED = true
 
+# Secrets (configured via GitHub Actions)
+# RESEND_API_KEY - set via wrangler secret put RESEND_API_KEY
+
+# Observability
 [observability.logs]
 enabled = true
+
+# KV Namespace for rate limiting (optional - can be added later)
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "your_kv_namespace_id"
+# preview_id = "your_preview_kv_namespace_id"

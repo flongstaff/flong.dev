@@ -1,17 +1,38 @@
 {
-  "name": "flong-dev-contact-form",
+  "name": "flong-dev",
   "version": "1.0.0",
-  "description": "Contact form handler for flong.dev using Cloudflare Workers",
-  "main": "src/index.js",
+  "description": "Franco Longstaff's professional IT portfolio website with Cloudflare Workers",
+  "main": "index.html",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler publish",
-    "tail": "wrangler tail"
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "test": "echo \"No tests required for static site\" && exit 0",
+    "lint": "echo \"No linting required for static site\" && exit 0",
+    "build": "echo \"Static site - no build required\" && exit 0"
   },
   "devDependencies": {
-    "wrangler": "^3.0.0"
+    "wrangler": "^3.78.0"
   },
-  "keywords": ["cloudflare", "workers", "contact-form", "email"],
+  "dependencies": {},
+  "keywords": [
+    "portfolio", 
+    "cloudflare", 
+    "workers", 
+    "it-systems", 
+    "devops", 
+    "proxmox", 
+    "azure"
+  ],
   "author": "Franco Longstaff <hello@flong.dev>",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://flong.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flongstaff/flong.dev.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
 }

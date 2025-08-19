@@ -91,29 +91,47 @@
         
         // Track form submissions
         function trackFormSubmission(formType) {
+            // Google Analytics
             gtag('event', 'form_submit', {
                 'event_category': 'engagement',
                 'event_label': formType,
                 'value': 1
             });
+            
+            // Microsoft Clarity
+            if (typeof clarity !== 'undefined') {
+                clarity("set", "formType", formType);
+            }
         }
         
         // Track project card interactions
         function trackProjectInteraction(projectName) {
+            // Google Analytics
             gtag('event', 'project_view', {
                 'event_category': 'engagement', 
                 'event_label': projectName,
                 'value': 1
             });
+            
+            // Microsoft Clarity
+            if (typeof clarity !== 'undefined') {
+                clarity("set", "projectName", projectName);
+            }
         }
         
         // Track booking requests
         function trackBookingRequest(callType) {
+            // Google Analytics
             gtag('event', 'booking_request', {
                 'event_category': 'conversion',
                 'event_label': callType,
                 'value': 10
             });
+            
+            // Microsoft Clarity
+            if (typeof clarity !== 'undefined') {
+                clarity("set", "callType", callType);
+            }
         }
     </script>
     

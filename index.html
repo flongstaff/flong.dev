@@ -1045,6 +1045,81 @@
         .contact {
             padding: 5rem 2rem;
         }
+        
+        /* Booking System */
+        .booking-options {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .booking-options h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        .booking-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .booking-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .booking-card h4 {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .booking-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .booking-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .booking-details span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+        
+        .booking-btn {
+            width: 100%;
+        }
 
         .contact-content {
             max-width: 1200px;
@@ -1519,6 +1594,24 @@
         .will-change-opacity {
             will-change: opacity;
         }
+        
+        /* Mobile responsive for booking system */
+        @media (max-width: 768px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .booking-card {
+                padding: 1.5rem;
+            }
+            
+            .booking-icon {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1785,7 +1878,6 @@
             </div>
         </section>
 
-
         <section id="experience" class="experience" data-lazy>
             <div class="experience-content">
                 <h2 class="section-title" data-en="Professional Experience" data-es="Experiencia Profesional">Professional Experience</h2>
@@ -1897,6 +1989,34 @@
                     Ready to optimize your IT infrastructure? I'm available for consulting, system administration, 
                     and DevOps projects. Let's discuss how I can help streamline your operations.
                 </p>
+                
+                <!-- Booking Options -->
+                <div class="booking-options">
+                    <h3 data-en="Schedule a Consultation" data-es="Programa una Consultoría">Schedule a Consultation</h3>
+                    <div class="booking-grid">
+                        <div class="booking-card">
+                            <div class="booking-icon">📞</div>
+                            <h4 data-en="Phone Consultation" data-es="Consultoría Telefónica">Phone Consultation</h4>
+                            <p data-en="Quick discussion about your IT needs and challenges" data-es="Discusión rápida sobre tus necesidades y desafíos IT">Quick discussion about your IT needs and challenges</p>
+                            <div class="booking-details">
+                                <span data-en="15-30 minutes" data-es="15-30 minutos">15-30 minutes</span>
+                                <span data-en="Free initial consultation" data-es="Consultoría inicial gratuita">Free initial consultation</span>
+                            </div>
+                            <button class="btn btn-outline booking-btn" data-call-type="phone" data-en="Schedule Phone Call" data-es="Programar Llamada">Schedule Phone Call</button>
+                        </div>
+                        
+                        <div class="booking-card">
+                            <div class="booking-icon">💻</div>
+                            <h4 data-en="Video Consultation" data-es="Consultoría por Video">Video Consultation</h4>
+                            <p data-en="In-depth technical discussion with screen sharing capabilities" data-es="Discusión técnica profunda con capacidades de compartir pantalla">In-depth technical discussion with screen sharing capabilities</p>
+                            <div class="booking-details">
+                                <span data-en="30-60 minutes" data-es="30-60 minutos">30-60 minutes</span>
+                                <span data-en="Detailed technical review" data-es="Revisión técnica detallada">Detailed technical review</span>
+                            </div>
+                            <button class="btn btn-primary booking-btn" data-call-type="video" data-en="Schedule Video Call" data-es="Programar Video Llamada">Schedule Video Call</button>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="contact-container">
                     <div class="contact-form-section">
@@ -2180,6 +2300,102 @@
         
         // Initialize project filters on page load
         initializeProjectFilters();
+        
+        // Booking system functionality
+        function initializeBookingSystem() {
+            const bookingButtons = document.querySelectorAll('.booking-btn');
+            
+            bookingButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const callType = button.getAttribute('data-call-type');
+                    const isSpanish = document.documentElement.getAttribute('data-language') === 'es';
+                    
+                    // Create Google Calendar event
+                    const now = new Date();
+                    const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+                    const startTime = new Date(nextWeek);
+                    startTime.setHours(10, 0, 0, 0); // Default to 10 AM
+                    
+                    const endTime = new Date(startTime);
+                    if (callType === 'phone') {
+                        endTime.setMinutes(startTime.getMinutes() + 30); // 30 min for phone
+                    } else {
+                        endTime.setMinutes(startTime.getMinutes() + 60); // 60 min for video
+                    }
+                    
+                    // Format dates for Google Calendar
+                    const formatDate = (date) => {
+                        return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                    };
+                    
+                    // Create calendar event details
+                    const eventTitle = isSpanish 
+                        ? `Consultoría IT con Franco Longstaff - ${callType === 'phone' ? 'Telefónica' : 'Video'}`
+                        : `IT Consultation with Franco Longstaff - ${callType === 'phone' ? 'Phone' : 'Video'}`;
+                    
+                    const eventDescription = isSpanish 
+                        ? `Consultoría ${callType === 'phone' ? 'telefónica' : 'por video'} para discutir necesidades de infraestructura IT.\n\nContacto: hello@flong.dev\nSitio web: https://flong.dev\n\nPor favor confirma la hora que mejor te funcione.`
+                        : `${callType === 'phone' ? 'Phone' : 'Video'} consultation to discuss IT infrastructure needs.\n\nContact: hello@flong.dev\nWebsite: https://flong.dev\n\nPlease confirm the time that works best for you.`;
+                    
+                    // Google Calendar URL
+                    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${formatDate(startTime)}/${formatDate(endTime)}&details=${encodeURIComponent(eventDescription)}&location=${callType === 'video' ? 'Google Meet (link to be provided)' : 'Phone call'}&add=hello@flong.dev`;
+                    
+                    // Gmail compose URL with calendar invitation
+                    const emailSubject = isSpanish 
+                        ? `Solicitud de Consultoría ${callType === 'phone' ? 'Telefónica' : 'por Video'} - IT`
+                        : `${callType === 'phone' ? 'Phone' : 'Video'} Consultation Request - IT`;
+                    
+                    const emailBody = isSpanish 
+                        ? `Hola Franco,\n\nMe gustaría programar una consultoría ${callType === 'phone' ? 'telefónica' : 'por video'} contigo.\n\nDetalles:\n- Tipo: ${callType === 'phone' ? 'Consultoría telefónica (30 min)' : 'Consultoría por video (60 min)'}\n- Fecha sugerida: [Por favor sugiere tu disponibilidad]\n- Mi zona horaria: [Tu zona horaria]\n\nMis datos de contacto:\n- Nombre: [Tu nombre]\n- ${callType === 'phone' ? 'Teléfono' : 'Email'}: [Tu ${callType === 'phone' ? 'número' : 'email'}]\n\nBreve descripción del proyecto:\n[Describe tu situación actual e infraestructura IT]\n\nTambién he creado un evento de calendario sugerido - por favor modifica la hora según tu disponibilidad.\n\nGracias,\n[Tu nombre]`
+                        : `Hi Franco,\n\nI would like to schedule a ${callType === 'phone' ? 'phone' : 'video'} consultation with you.\n\nDetails:\n- Type: ${callType === 'phone' ? 'Phone consultation (30 min)' : 'Video consultation (60 min)'}\n- Suggested date: [Please suggest your availability]\n- My timezone: [Your timezone]\n\nMy contact details:\n- Name: [Your name]\n- ${callType === 'phone' ? 'Phone' : 'Email'}: [Your ${callType === 'phone' ? 'number' : 'email'}]\n\nBrief project description:\n[Describe your current situation and IT infrastructure]\n\nI've also created a suggested calendar event - please modify the time according to your availability.\n\nThanks,\n[Your name]`;
+                    
+                    const gmailUrl = `https://mail.google.com/mail/?view=cm&to=hello@flong.dev&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                    
+                    // Track booking request
+                    if (typeof trackBookingRequest === 'function') {
+                        trackBookingRequest(callType);
+                    }
+                    
+                    // Open calendar event creation first
+                    window.open(calendarUrl, '_blank');
+                    
+                    // Then open Gmail compose after a short delay
+                    setTimeout(() => {
+                        window.open(gmailUrl, '_blank');
+                    }, 1000);
+                    
+                    // Show instructions
+                    const instructionMsg = isSpanish 
+                        ? '¡Se abrieron dos pestañas! 1) Crea el evento de calendario, 2) Envía el email de confirmación.'
+                        : 'Two tabs opened! 1) Create calendar event, 2) Send confirmation email.';
+                    
+                    // Create temporary notification
+                    const notification = document.createElement('div');
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: var(--primary);
+                        color: white;
+                        padding: 1rem 1.5rem;
+                        border-radius: 10px;
+                        z-index: 1000;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                        max-width: 300px;
+                        text-align: center;
+                    `;
+                    notification.textContent = instructionMsg;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 5000);
+                });
+            });
+        }
+        
+        // Initialize booking system on page load
+        initializeBookingSystem();
 
         // Lazy loading with Intersection Observer
         function initializeLazyLoading() {

@@ -19,16 +19,20 @@
   
   # Performance & Caching
   Cache-Control: public, max-age=31536000, immutable
+  Vary: Accept-Encoding
 
 # Specific rules for different file types
 /*.html
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=86400
+  Vary: Accept-Encoding
 
 /*.js
   Cache-Control: public, max-age=31536000, immutable
+  Vary: Accept-Encoding
 
 /*.css
   Cache-Control: public, max-age=31536000, immutable
+  Vary: Accept-Encoding
 
 /api/*
   Cache-Control: no-cache, no-store, must-revalidate

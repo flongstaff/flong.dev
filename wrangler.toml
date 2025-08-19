@@ -3,6 +3,9 @@ main = "src/api-worker.js"
 compatibility_date = "2024-08-15"
 compatibility_flags = ["nodejs_compat"]
 
+# Pages configuration
+pages_build_output_dir = "."
+
 # Routes for enhanced API functionality
 routes = [
   { pattern = "flong.dev/api/*", zone_name = "flong.dev" },

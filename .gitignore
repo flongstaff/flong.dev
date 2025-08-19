@@ -25,3 +25,6 @@ logs/
 # Build files
 build/
 coverage/
+
+# MCP configuration
+.roo/

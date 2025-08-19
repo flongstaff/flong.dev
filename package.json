@@ -12,16 +12,15 @@
     "build": "echo \"Static site - no build required\" && exit 0"
   },
   "devDependencies": {
-    "wrangler": "^3.78.0"
+    "wrangler": "^4.31.0"
   },
-  "dependencies": {},
   "keywords": [
-    "portfolio", 
-    "cloudflare", 
-    "workers", 
-    "it-systems", 
-    "devops", 
-    "proxmox", 
+    "portfolio",
+    "cloudflare",
+    "workers",
+    "it-systems",
+    "devops",
+    "proxmox",
     "azure"
   ],
   "author": "Franco Longstaff <hello@flong.dev>",

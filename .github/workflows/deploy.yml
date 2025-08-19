@@ -172,10 +172,10 @@ jobs:
         run: |
           echo "🔍 Testing security headers..."
           
-          curl -s -I https://flong.dev | grep "X-Frame-Options" && echo "✅ X-Frame-Options header present"
-          curl -s -I https://flong.dev | grep "X-Content-Type-Options" && echo "✅ X-Content-Type-Options header present"
-          curl -s -I https://flong.dev | grep "Strict-Transport-Security" && echo "✅ HSTS header present"
-          curl -s -I https://flong.dev | grep "Content-Security-Policy" && echo "✅ CSP header present"
+          curl -s -I https://flong.dev | grep -i "x-frame-options" && echo "✅ X-Frame-Options header present"
+          curl -s -I https://flong.dev | grep -i "x-content-type-options" && echo "✅ X-Content-Type-Options header present"
+          curl -s -I https://flong.dev | grep -i "strict-transport-security" && echo "✅ HSTS header present"
+          curl -s -I https://flong.dev | grep -i "content-security-policy" && echo "✅ CSP header present"
 
       - name: Test performance
         run: |

@@ -70,37 +70,51 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3e%3cdefs%3e%3clinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%230099cc;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3crect width='120' height='120' rx='25' fill='url(%23grad)'/%3e%3ctext x='60' y='75' font-family='Arial, sans-serif' font-size='48' font-weight='800' fill='white' text-anchor='middle'%3eF%3c/text%3e%3ctext x='95' y='95' font-family='Arial, sans-serif' font-size='20' font-weight='600' fill='white' opacity='0.7' text-anchor='middle'%3e%7B %7D%3c/text%3e%3c/svg%3e">
     
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L08C395YSY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         
         // Configure with privacy settings
-        gtag('config', 'GA_MEASUREMENT_ID', {
+        gtag('config', 'G-XXXXXXXXXX', {
             anonymize_ip: true,
             allow_google_signals: false,
             allow_ad_personalization_signals: false,
             cookie_expires: 63072000, // 2 years
             page_title: document.title,
-            custom_map: {
-                'custom1': 'user_engagement_score'
-            }
+            send_page_view: true
         });
         
-        // Enhanced measurement events
-        gtag('config', 'GA_MEASUREMENT_ID', {
-            allow_enhanced_conversions: true,
-            enhanced_conversions: {
-                'page_view': true,
-                'scroll': true,
-                'outbound_clicks': true,
-                'site_search': false,
-                'video_engagement': false,
-                'file_downloads': true
-            }
-        });
+        // Track form submissions
+        function trackFormSubmission(formType) {
+            gtag('event', 'form_submit', {
+                'event_category': 'engagement',
+                'event_label': formType,
+                'value': 1
+            });
+        }
+        
+        // Track project card interactions
+        function trackProjectInteraction(projectName) {
+            gtag('event', 'project_view', {
+                'event_category': 'engagement', 
+                'event_label': projectName,
+                'value': 1
+            });
+        }
+        
+        // Track booking requests
+        function trackBookingRequest(callType) {
+            gtag('event', 'booking_request', {
+                'event_category': 'conversion',
+                'event_label': callType,
+                'value': 10
+            });
+        }
     </script>
+    
+    <!-- TODO: Replace G-XXXXXXXXXX with your actual Google Analytics 4 measurement ID -->
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -773,7 +787,51 @@
 
         .projects-header .section-title {
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Project Filters */
+        .project-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .filter-btn:hover {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: var(--primary);
+            color: var(--text);
+            transform: translateY(-1px);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        }
+        
+        .project-card[data-category] {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card.hidden {
+            display: none;
         }
 
         .projects-grid {
@@ -862,6 +920,7 @@
         .project-icon.automation { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
         .project-icon.web { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .project-icon.github { background: linear-gradient(135deg, #333, #24292e); }
+        .project-icon.web { background: linear-gradient(135deg, #06b6d4, #0891b2); }
 
 
         .project-actions {
@@ -901,6 +960,12 @@
             background: rgba(139, 92, 246, 0.2);
             color: #8b5cf6;
             border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .status-badge.coming-soon {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .uptime {
@@ -1524,7 +1589,7 @@
 
                 <div class="skill-card">
                     <div class="skill-icon devops">⚙️</div>
-                    <h3 data-en="DevOps & Automation" data-es="DevOps y Automatización">DevOps & Automation</h3>
+                    <h3 data-en="DevOps` & Automation" data-es="DevOps y Automatización">DevOps & Automation</h3>
                     <div class="skill-list">
                         <div class="skill-item" data-en="PowerShell Automation" data-es="Automatización PowerShell">PowerShell Automation</div>
                         <div class="skill-item" data-en="JavaScript & React" data-es="JavaScript y React">JavaScript & React</div>
@@ -1553,7 +1618,7 @@
                 </div>
 
                 <div class="projects-grid">
-                    <div class="project-card">
+                    <div class="project-card" data-category="infrastructure">
                         <div class="project-card-inner">
                             <div class="project-card-front">
                                 <div class="project-header">
@@ -1585,7 +1650,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-category="platform">
                         <div class="project-card-inner">
                             <div class="project-card-front">
                                 <div class="project-header">
@@ -1617,7 +1682,7 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" data-category="web-development">
                         <div class="project-card-inner">
                             <div class="project-card-front">
                                 <div class="project-header">
@@ -1646,6 +1711,73 @@
                                         <span class="tech-tag">Cloudflare</span>
                                     </div>
                                     <a href="https://github.com/flongstaff/flong.dev" class="btn btn-outline" target="_blank" data-en="View Source" data-es="Ver Código" style="margin-top: 0.5rem; width: 100%; font-size: 0.75rem; padding: 0.4rem;">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coming Soon Projects -->
+                    <div class="project-card" data-category="web-development coming-soon">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-header">
+                                    <div class="project-icon web">🌐</div>
+                                    <span class="status-badge coming-soon">Coming Soon</span>
+                                </div>
+                                <h3 data-en="E-commerce Platform" data-es="Plataforma E-commerce">E-commerce Platform</h3>
+                                <p class="project-description" data-en="Modern e-commerce solution with advanced inventory management and analytics." data-es="Solución e-commerce moderna con gestión de inventario avanzada y analíticas.">
+                                    Modern e-commerce solution with advanced inventory management and analytics.
+                                </p>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-details">
+                                    <h4 data-en="Planned Features:" data-es="Características Planificadas:">Planned Features:</h4>
+                                    <ul>
+                                        <li data-en="Multi-vendor marketplace" data-es="Marketplace multi-vendedor">Multi-vendor marketplace</li>
+                                        <li data-en="Real-time inventory tracking" data-es="Seguimiento de inventario en tiempo real">Real-time inventory tracking</li>
+                                        <li data-en="Advanced analytics dashboard" data-es="Panel de analíticas avanzado">Advanced analytics dashboard</li>
+                                        <li data-en="Mobile-first design" data-es="Diseño mobile-first">Mobile-first design</li>
+                                        <li data-en="Payment gateway integration" data-es="Integración gateway de pagos">Payment gateway integration</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">React</span>
+                                        <span class="tech-tag">Node.js</span>
+                                        <span class="tech-tag">PostgreSQL</span>
+                                        <span class="tech-tag">Stripe</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="web-development coming-soon">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-header">
+                                    <div class="project-icon web">📊</div>
+                                    <span class="status-badge coming-soon">Coming Soon</span>
+                                </div>
+                                <h3 data-en="Business Analytics Dashboard" data-es="Dashboard Analíticas Empresariales">Business Analytics Dashboard</h3>
+                                <p class="project-description" data-en="Comprehensive analytics platform for business intelligence and reporting." data-es="Plataforma de analíticas integral para inteligencia empresarial y reportes.">
+                                    Comprehensive analytics platform for business intelligence and reporting.
+                                </p>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-details">
+                                    <h4 data-en="Key Components:" data-es="Componentes Clave:">Key Components:</h4>
+                                    <ul>
+                                        <li data-en="Real-time data visualization" data-es="Visualización de datos en tiempo real">Real-time data visualization</li>
+                                        <li data-en="Custom report builder" data-es="Constructor de reportes personalizado">Custom report builder</li>
+                                        <li data-en="API integrations" data-es="Integraciones API">API integrations</li>
+                                        <li data-en="Automated alerts system" data-es="Sistema de alertas automatizado">Automated alerts system</li>
+                                        <li data-en="Multi-tenant architecture" data-es="Arquitectura multi-tenant">Multi-tenant architecture</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Vue.js</span>
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">MongoDB</span>
+                                        <span class="tech-tag">D3.js</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2011,6 +2143,44 @@
         
         // Initialize language on page load
         initializeLanguage();
+        
+        // Project filtering functionality
+        function initializeProjectFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card[data-category]');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // Update active state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        const categories = card.getAttribute('data-category').split(' ');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                    
+                    // Track filter usage
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'project_filter', {
+                            'event_category': 'engagement',
+                            'event_label': filter
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Initialize project filters on page load
+        initializeProjectFilters();
 
         // Lazy loading with Intersection Observer
         function initializeLazyLoading() {
@@ -2152,6 +2322,14 @@
                     } catch (error) {
                         console.error('Form submission error:', error);
                         alert('There was an error sending your message. Please try again or contact me directly at hello@flong.dev');
+                        
+                        // Track form error
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'form_error', {
+                                'event_category': 'engagement',
+                                'event_label': 'contact_form_error'
+                            });
+                        }
                         
                         // Reset button state
                         submitBtn.classList.remove('loading');

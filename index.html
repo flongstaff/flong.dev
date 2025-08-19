@@ -76,15 +76,25 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         
-        // Configure with privacy settings
         gtag('config', 'G-L08C395YSY', {
             anonymize_ip: true,
             allow_google_signals: false,
             allow_ad_personalization_signals: false,
-            cookie_expires: 63072000, // 2 years
+            cookie_expires: 63072000,
             page_title: document.title,
             send_page_view: true
         });
+    </script>
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "o8m5n9p1q2");
+    </script>
+    <script>
         
         // Track form submissions
         function trackFormSubmission(formType) {
@@ -2084,7 +2094,7 @@
                             
                             <div class="form-group">
                                 <label for="message" data-en="Project Details" data-es="Detalles del Proyecto">Project Details</label>
-                                <textarea id="message" name="message" rows="5" required data-placeholder-en="Tell me about your project, timeline, and any specific requirements..." data-placeholder-es="Contáme sobre tu proyecto, cronograma y requisitos específicos..." placeholder="Tell me about your project, timeline, and any specific requirements..."></textarea>
+                                <textarea id="message" name="message" rows="5" required data-placeholder-en="Describe your IT infrastructure needs, current systems, and project scope..." data-placeholder-es="Describe tus necesidades de infraestructura IT, sistemas actuales y alcance del proyecto..." placeholder="Describe your IT infrastructure needs, current systems, and project scope..."></textarea>
                             </div>
                             
                             <button type="submit" class="btn btn-primary btn-submit">
@@ -2487,7 +2497,6 @@
                     });
                     lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
                 } catch (e) {
-                    console.log('LCP monitoring not available');
                 }
 
                 // First Input Delay
@@ -2504,7 +2513,6 @@
                     });
                     fidObserver.observe({ entryTypes: ['first-input'] });
                 } catch (e) {
-                    console.log('FID monitoring not available');
                 }
             }
 

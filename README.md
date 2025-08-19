@@ -62,9 +62,6 @@ npm install
 # Deploy worker (requires Cloudflare account)
 wrangler deploy
 
-# For local development, simply open index.html
-# or serve with any static file server
-python -m http.server 8000
 ```
 
 ## 📊 Project Structure

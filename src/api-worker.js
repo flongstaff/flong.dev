@@ -174,10 +174,26 @@ async function handleContactSubmission(request, env) {
     };
 
     // Validate required fields
-    if (!validateInput(data.name, VALIDATION_PATTERNS.name) ||
-        !validateInput(data.email, VALIDATION_PATTERNS.email) ||
-        !validateInput(data.message, VALIDATION_PATTERNS.message)) {
-      return new Response('Invalid input data', { status: 400, headers: getSecurityHeaders() });
+    if (!data.name || !validateInput(data.name, VALIDATION_PATTERNS.name)) {
+      console.log('Validation failed for name:', data.name);
+      return new Response(JSON.stringify({ error: 'Invalid name format' }), { 
+        status: 400, 
+        headers: { 'Content-Type': 'application/json', ...getSecurityHeaders() }
+      });
+    }
+    if (!data.email || !validateInput(data.email, VALIDATION_PATTERNS.email)) {
+      console.log('Validation failed for email:', data.email);
+      return new Response(JSON.stringify({ error: 'Invalid email format' }), { 
+        status: 400, 
+        headers: { 'Content-Type': 'application/json', ...getSecurityHeaders() }
+      });
+    }
+    if (!data.message || !validateInput(data.message, VALIDATION_PATTERNS.message)) {
+      console.log('Validation failed for message:', data.message, 'length:', data.message.length);
+      return new Response(JSON.stringify({ error: 'Message too short (minimum 5 characters)' }), { 
+        status: 400, 
+        headers: { 'Content-Type': 'application/json', ...getSecurityHeaders() }
+      });
     }
 
     // Enhanced spam detection

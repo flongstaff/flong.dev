@@ -39,9 +39,9 @@ const SECURITY_HEADERS = {
 // Input validation patterns for security
 const VALIDATION_PATTERNS = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  name: /^[a-zA-Z\s\-\.]{1,100}$/,
+  name: /^[a-zA-Z\s\-\.']{1,100}$/,  // Allow apostrophes in names (O'Brien, D'Souza)
   message: /^[\s\S]{10,2000}$/,
-  project: /^[a-zA-Z\-_]{1,50}$/
+  project: /^[a-zA-Z\s\-_]{1,50}$/  // Allow spaces in project names
 };
 
 // Response headers cache for performance

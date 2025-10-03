@@ -284,20 +284,41 @@ async function isSpam(data) {
 }
 
 async function sendEmail(env, data) {
-  // Use existing Resend integration
-  return await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      from: 'contact@flong.dev',
-      to: 'hello@flong.dev',
-      subject: `New ${data.project} inquiry from ${data.name}`,
-      html: generateEmailHTML(data)
-    })
-  });
+  // Send email using MailChannels API for Cloudflare Email Routing
+  try {
+    const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        personalizations: [{
+          to: [{ email: 'hello@flong.dev' }]
+        }],
+        from: {
+          email: 'noreply@flong.dev',
+          name: 'flong.dev Contact Form'
+        },
+        subject: `New ${data.project} inquiry from ${data.name}`,
+        content: [{
+          type: 'text/html',
+          value: generateEmailHTML(data)
+        }]
+      })
+    });
+
+    if (response.ok) {
+      console.log('Email sent successfully via MailChannels');
+      return { ok: true };
+    } else {
+      const error = await response.text();
+      console.error('MailChannels API error:', error);
+      return { ok: false };
+    }
+  } catch (error) {
+    console.error('Email sending error:', error);
+    return { ok: false };
+  }
 }
 
 function generateEmailHTML(data) {

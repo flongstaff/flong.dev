@@ -19,8 +19,7 @@ ENVIRONMENT = "production"
 API_VERSION = "1.0.0"
 RATE_LIMIT_ENABLED = true
 
-# Secrets (configured via GitHub Actions)
-# RESEND_API_KEY - set via wrangler secret put RESEND_API_KEY
+
 
 # Observability
 [observability.logs]

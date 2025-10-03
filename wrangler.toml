@@ -4,11 +4,14 @@ main = "src/api-worker.js"
 compatibility_date = "2024-08-15"
 compatibility_flags = ["nodejs_compat"]
 
-# Routes - API endpoints on the domain
+# Routes - API endpoints on the domain (include both www and non-www)
 routes = [
   { pattern = "flong.dev/api/*", zone_name = "flong.dev" },
+  { pattern = "www.flong.dev/api/*", zone_name = "flong.dev" },
   { pattern = "flong.dev/health", zone_name = "flong.dev" },
-  { pattern = "flong.dev/analytics", zone_name = "flong.dev" }
+  { pattern = "www.flong.dev/health", zone_name = "flong.dev" },
+  { pattern = "flong.dev/analytics", zone_name = "flong.dev" },
+  { pattern = "www.flong.dev/analytics", zone_name = "flong.dev" }
 ]
 
 # Environment variables

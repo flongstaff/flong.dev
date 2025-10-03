@@ -4,20 +4,20 @@
 
 Professional portfolio website for **Franco Longstaff** - IT Systems Administrator, DevOps Expert, and Web Administrator based in Perth, Australia.
 
-## 🚀 About This Project
+## About This Project
 
 A modern, responsive portfolio showcasing my expertise in IT systems administration, cloud infrastructure, and DevOps practices. Built with performance, accessibility, and professional presentation in mind.
 
-### ✨ Key Features
+### Key Features
 
-- **🎨 Modern Design**: Clean, professional interface with dark/light mode toggle
-- **📱 Fully Responsive**: Optimized for all devices from mobile to desktop
-- **⚡ High Performance**: Fast loading with optimized assets and lazy loading
-- **🔍 SEO Optimized**: Complete meta tags, sitemap, and structured data
-- **📧 Working Contact Form**: Real-time email notifications via Cloudflare Workers
-- **🎯 Professional Focus**: Showcases real IT projects and achievements
+- **Modern Design**: Clean, professional interface with dark/light mode toggle
+- **Fully Responsive**: Optimized for all devices from mobile to desktop
+- **High Performance**: Fast loading with optimized assets and lazy loading
+- **SEO Optimized**: Complete meta tags, sitemap, and structured data
+- **Working Contact Form**: Real-time email notifications via Cloudflare Workers
+- **Professional Focus**: Showcases real IT projects and achievements
 
-## 🛠️ Technical Implementation
+## Technical Implementation
 
 ### Frontend Stack
 - **HTML5** - Semantic markup with accessibility features
@@ -39,7 +39,7 @@ A modern, responsive portfolio showcasing my expertise in IT systems administrat
 - **Optimized Images** - SVG icons and optimized graphics
 - **Minimal Dependencies** - Pure vanilla JavaScript approach
 
-## 🎯 Professional Highlights
+## Professional Highlights
 
 This portfolio demonstrates my expertise in:
 

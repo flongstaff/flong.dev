@@ -1,5 +1,10 @@
 name: Deploy Portfolio to Cloudflare
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 on:
   push:
     branches: [ main ]

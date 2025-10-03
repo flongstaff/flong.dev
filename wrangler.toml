@@ -40,3 +40,8 @@ preview_id = "d771c4c937264edaa81c65ea60adedaf"
 binding = "CONTACTS"
 id = "5529065343fb411b9f3c9e5f8028520d"
 preview_id = "08df2d6a214145caa331366fb07d2240"
+
+# Email routing binding
+[[send_email]]
+name = "EMAIL_ROUTING"
+destination_address = "hello@flong.dev"

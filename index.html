@@ -1095,7 +1095,7 @@
         .form-group textarea {
             width: 100%;
             padding: 0.8rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 10px;
             color: var(--text);
@@ -1531,10 +1531,10 @@
                 flong.dev
             </a>
             <ul class="nav-links">
-                <li><a href="#skills" data-en="Services" data-es="Servicios">Services</a></li>
-                <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
-                <li><a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a></li>
-                <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+                <li><a href="#skills" data-en="Services" data-es="Servicios" data-it="Servizi">Services</a></li>
+                <li><a href="#projects" data-en="Projects" data-es="Proyectos" data-it="Progetti">Projects</a></li>
+                <li><a href="#experience" data-en="Experience" data-es="Experiencia" data-it="Esperienza">Experience</a></li>
+                <li><a href="#contact" data-en="Contact" data-es="Contacto" data-it="Contatto">Contact</a></li>
                 <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
                     <span class="theme-icon dark-icon">◐</span>
                     <span class="theme-icon light-icon">◯</span>
@@ -1916,30 +1916,30 @@
                     <div class="contact-form-section">
                         <form class="contact-form" id="contactForm">
                             <div class="form-group">
-                                <label for="name" data-en="Name" data-es="Nombre">Name</label>
+                                <label for="name" data-en="Name" data-es="Nombre" data-it="Nome">Name</label>
                                 <input type="text" id="name" name="name" required>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="email" data-en="Email" data-es="Email">Email</label>
+                                <label for="email" data-en="Email" data-es="Email" data-it="Email">Email</label>
                                 <input type="email" id="email" name="email" required>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="company" data-en="Company (Optional)" data-es="Empresa (Opcional)">Company (Optional)</label>
+                                <label for="company" data-en="Company (Optional)" data-es="Empresa (Opcional)" data-it="Azienda (Opzionale)">Company (Optional)</label>
                                 <input type="text" id="company" name="company">
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="project" data-en="Project Type" data-es="Tipo de Proyecto">Project Type</label>
+                                <label for="project" data-en="Project Type" data-es="Tipo de Proyecto" data-it="Tipo di Progetto">Project Type</label>
                                 <select id="project" name="project" required>
                                     <option value="" data-en="Select a project type" data-es="Selecciona un tipo de proyecto">Select a project type</option>
-                                    <option value="infrastructure" data-en="Infrastructure Setup" data-es="Configuración de Infraestructura">Infrastructure Setup</option>
-                                    <option value="migration" data-en="System Migration" data-es="Migración de Sistemas">System Migration</option>
-                                    <option value="automation" data-en="Automation & Scripts" data-es="Automatización y Scripts">Automation & Scripts</option>
-                                    <option value="consulting" data-en="IT Consulting" data-es="Consultoría IT">IT Consulting</option>
-                                    <option value="support" data-en="Ongoing Support" data-es="Soporte Continuo">Ongoing Support</option>
-                                    <option value="other" data-en="Other" data-es="Otro">Other</option>
+                                <option value="infrastructure" data-en="Infrastructure Setup" data-es="Configuración de Infraestructura" data-it="Configurazione Infrastruttura">Infrastructure Setup</option>
+                                <option value="migration" data-en="System Migration" data-es="Migración de Sistemas" data-it="Migrazione Sistema">System Migration</option>
+                                <option value="automation" data-en="Automation & Scripts" data-es="Automatización y Scripts" data-it="Automazione e Script">Automation & Scripts</option>
+                                <option value="consulting" data-en="IT Consulting" data-es="Consultoría IT" data-it="Consulenza IT">IT Consulting</option>
+                                <option value="support" data-en="Ongoing Support" data-es="Soporte Continuo" data-it="Supporto Continuativo">Ongoing Support</option>
+                                <option value="other" data-en="Other" data-es="Otro" data-it="Altro">Other</option>
                                 </select>
                             </div>
                             
@@ -2104,11 +2104,13 @@
         
         // Update language icon
         function updateLanguageIcon(language) {
-            languageIcon.textContent = language === 'en' ? 'ES' : 'EN';
+            const languages = { 'en': 'ES', 'es': 'IT', 'it': 'EN' };
+            languageIcon.textContent = languages[language] || 'EN';
         }
-        
+
         // Update content based on language
         function updateContent(language) {
+            // Support both 2-language (data-en/data-es) and 3-language (data-en/data-es/data-it) elements
             const elements = document.querySelectorAll('[data-en][data-es]');
             elements.forEach(element => {
                 const content = element.getAttribute(`data-${language}`);
@@ -2120,7 +2122,7 @@
                     }
                 }
             });
-            
+
             // Update select options
             const selectOptions = document.querySelectorAll('option[data-en][data-es]');
             selectOptions.forEach(option => {
@@ -2130,18 +2132,22 @@
                 }
             });
         }
-        
-        // Toggle language
+
+        // Toggle language - cycle through EN -> ES -> IT -> EN
         function toggleLanguage() {
             const currentLanguage = document.documentElement.getAttribute('data-language') || 'en';
-            const newLanguage = currentLanguage === 'en' ? 'es' : 'en';
-            
+            const nextLanguages = { 'en': 'es', 'es': 'it', 'it': 'en' };
+            const newLanguage = nextLanguages[currentLanguage] || 'en';
+
             document.documentElement.setAttribute('data-language', newLanguage);
-            document.documentElement.setAttribute('lang', newLanguage === 'es' ? 'es-AR' : 'en-AU');
+            document.documentElement.setAttribute('lang',
+                newLanguage === 'es' ? 'es-AR' :
+                newLanguage === 'it' ? 'it-IT' : 'en-AU'
+            );
             localStorage.setItem('language', newLanguage);
             updateLanguageIcon(newLanguage);
             updateContent(newLanguage);
-            
+
             // Track language change for analytics if available
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'language_change', {

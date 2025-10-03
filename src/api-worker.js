@@ -40,7 +40,7 @@ const SECURITY_HEADERS = {
 const VALIDATION_PATTERNS = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   name: /^[a-zA-Z\s\-\.']{1,100}$/,  // Allow apostrophes in names (O'Brien, D'Souza)
-  message: /^[\s\S]{10,2000}$/,
+  message: /^[\s\S]{5,2000}$/,  // Reduced minimum from 10 to 5 characters
   project: /^[a-zA-Z\s\-_]{1,50}$/  // Allow spaces in project names
 };
 

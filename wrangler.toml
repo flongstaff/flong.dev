@@ -49,3 +49,8 @@ preview_id = "08df2d6a214145caa331366fb07d2240"
 [[send_email]]
 name = "EMAIL"
 destination_address = "hello@flong.dev"
+
+# Analytics Engine for custom metrics and analytics
+[[analytics_engine_datasets]]
+binding = "ANALYTICS_ENGINE"
+dataset = "flong_dev_metrics"

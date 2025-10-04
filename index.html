@@ -431,24 +431,45 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
-        /* Language Toggle */
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+        }
+
         .language-toggle {
             background: var(--bg-card);
             border: 1px solid var(--border);
             cursor: pointer;
-            padding: 0.4rem;
+            padding: 0.5rem 0.75rem;
             border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
-            width: 38px;
-            height: 38px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
             backdrop-filter: blur(10px);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text);
+        }
+
+        .lang-dots {
+            display: flex;
+            gap: 2px;
+        }
+
+        .lang-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .lang-dot.active {
+            background: var(--primary);
+            width: 12px;
+            border-radius: 2px;
         }
 
         .language-toggle:hover {
@@ -456,6 +477,55 @@
             border-color: var(--primary);
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
+            min-width: 140px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .lang-option:hover {
+            background: var(--bg-card);
+        }
+
+        .lang-option.selected {
+            background: rgba(236, 72, 153, 0.1);
+            color: var(--primary);
+        }
+
+        .lang-flag {
+            font-size: 1.2rem;
         }
 
         [data-theme="light"] .language-toggle {
@@ -467,6 +537,15 @@
             background: rgba(37, 99, 235, 0.1);
             border-color: var(--primary);
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        [data-theme="light"] .lang-dropdown {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="light"] .lang-option.selected {
+            background: rgba(37, 99, 235, 0.1);
         }
 
         /* Hero Section */
@@ -1539,9 +1618,30 @@
                     <span class="theme-icon dark-icon">◐</span>
                     <span class="theme-icon light-icon">◯</span>
                 </button></li>
-                <li><button id="languageToggle" class="language-toggle" aria-label="Toggle language">
-                    <span id="languageIcon">ES</span>
-                </button></li>
+                <li class="language-switcher">
+                    <button id="languageToggle" class="language-toggle" aria-label="Toggle language">
+                        <span class="lang-dots">
+                            <span class="lang-dot" data-lang="en"></span>
+                            <span class="lang-dot" data-lang="es"></span>
+                            <span class="lang-dot" data-lang="it"></span>
+                        </span>
+                        <span id="currentLang">EN</span>
+                    </button>
+                    <div id="langDropdown" class="lang-dropdown">
+                        <div class="lang-option" data-lang="en">
+                            <span class="lang-flag">🇬🇧</span>
+                            <span>English</span>
+                        </div>
+                        <div class="lang-option" data-lang="es">
+                            <span class="lang-flag">🇪🇸</span>
+                            <span>Español</span>
+                        </div>
+                        <div class="lang-option" data-lang="it">
+                            <span class="lang-flag">🇮🇹</span>
+                            <span>Italiano</span>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -2360,5 +2460,8 @@
             }
         });
     </script>
+
+    <!-- Multilingual i18n System -->
+    <script src="src/i18n/i18n.js"></script>
 </body>
 </html>

@@ -221,6 +221,30 @@ async function handleContactSubmission(request, env) {
     // Always return success to user (typical for contact forms)
     // Email content will be logged for manual processing if needed
     await logSubmission(env, data, emailResponse.ok ? 'success' : 'fallback');
+
+    // Track contact form analytics
+    if (env.ANALYTICS_ENGINE) {
+      try {
+        env.ANALYTICS_ENGINE.writeDataPoint({
+          blobs: [
+            'contact_form',
+            data.project,
+            data.company ? 'has_company' : 'no_company',
+            emailResponse.ok ? 'email_sent' : 'email_failed',
+            request.cf?.country || 'unknown'
+          ],
+          doubles: [
+            1, // submission count
+            data.message.length,
+            emailResponse.ok ? 1 : 0
+          ],
+          indexes: [data.email.split('@')[1] || 'unknown'] // email domain
+        });
+      } catch (err) {
+        console.error('Contact analytics error:', err);
+      }
+    }
+
     return new Response(JSON.stringify({
       success: true,
       message: 'Message submitted successfully'
@@ -311,38 +335,107 @@ async function handleBookingRequest(request, env) {
 }
 
 /**
+ * Track analytics data using Analytics Engine
+ */
+function trackAnalytics(env, data) {
+  try {
+    if (!env.ANALYTICS_ENGINE) {
+      console.warn('Analytics Engine not configured');
+      return;
+    }
+
+    env.ANALYTICS_ENGINE.writeDataPoint({
+      blobs: [
+        data.endpoint || 'unknown',
+        data.method || 'GET',
+        data.country || 'unknown',
+        data.status || '200',
+        data.userAgent || 'unknown'
+      ],
+      doubles: [
+        data.responseTime || 0,
+        data.success ? 1 : 0,
+        data.rateLimit ? 1 : 0
+      ],
+      indexes: [data.requestId || 'none']
+    });
+  } catch (error) {
+    console.error('Analytics tracking error:', error);
+  }
+}
+
+/**
  * Main worker export with enhanced performance and security
  */
 export default {
   async fetch(request, env, ctx) {
+    const startTime = Date.now();
     const url = new URL(request.url);
     const pathname = url.pathname;
+    const requestId = crypto.randomUUID();
 
     // Early optimization: Skip security headers for static assets
     const isStaticAsset = pathname.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/);
 
     try {
+      let response;
+
       // Route handling with improved performance
       if (pathname.startsWith('/api/')) {
-        return handleApiRoutes(request, env, url);
+        response = await handleApiRoutes(request, env, url);
+      } else if (pathname === '/health') {
+        response = await handleHealthCheck(env);
+      } else if (pathname === '/analytics') {
+        response = await handleAnalytics(request, env);
+      } else {
+        // Default: 404 for other routes
+        response = new Response('Not Found', {
+          status: 404,
+          headers: { 'Content-Type': 'text/plain' }
+        });
       }
 
-      if (pathname === '/health') {
-        return handleHealthCheck(env);
-      }
+      // Track analytics for all requests
+      const responseTime = Date.now() - startTime;
+      ctx.waitUntil(
+        Promise.resolve().then(() => {
+          trackAnalytics(env, {
+            endpoint: pathname,
+            method: request.method,
+            country: request.cf?.country || 'unknown',
+            status: response.status.toString(),
+            userAgent: request.headers.get('User-Agent')?.substring(0, 50) || 'unknown',
+            responseTime: responseTime,
+            success: response.status >= 200 && response.status < 400,
+            rateLimit: response.status === 429,
+            requestId: requestId
+          });
+        })
+      );
 
-      if (pathname === '/analytics') {
-        return handleAnalytics(request, env);
-      }
-
-      // Default: 404 for other routes
-      return new Response('Not Found', {
-        status: 404,
-        headers: { 'Content-Type': 'text/plain' }
-      });
+      return response;
 
     } catch (error) {
       console.error('Worker error:', error);
+
+      // Track error in analytics
+      const responseTime = Date.now() - startTime;
+      ctx.waitUntil(
+        Promise.resolve().then(() => {
+          trackAnalytics(env, {
+            endpoint: pathname,
+            method: request.method,
+            country: request.cf?.country || 'unknown',
+            status: '500',
+            userAgent: request.headers.get('User-Agent')?.substring(0, 50) || 'unknown',
+            responseTime: responseTime,
+            success: false,
+            rateLimit: false,
+            requestId: requestId
+          });
+        })
+      );
+
       // Prevent error information leakage in production
       const isDevelopment = env.ENVIRONMENT === 'development';
       const errorMessage = isDevelopment ? `Internal Server Error: ${error.message}` : 'Internal Server Error';

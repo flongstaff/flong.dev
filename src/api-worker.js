@@ -2,6 +2,8 @@
  * Enhanced Cloudflare Worker for flong.dev
  * Handles API routes, security, and additional functionality
  */
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
 
 // Rate limiting configuration - optimized for microbursts
 const RATE_LIMITS = {
@@ -18,8 +20,7 @@ const TRUSTED_DOMAINS = [
   'www.google-analytics.com',
   'region1.google-analytics.com',
   'static.cloudflareinsights.com',
-  'www.clarity.ms',
-  'api.mailchannels.net'
+  'www.clarity.ms'
 ];
 
 // Security headers with optimized CSP
@@ -539,63 +540,52 @@ async function isSpam(data) {
 
 async function sendEmail(env, data) {
   console.log('Sending email to:', env.TO_EMAIL);
-  
+
   // Validate environment variables are set up
   if (!env.FROM_EMAIL || !env.TO_EMAIL) {
     console.error('Email configuration missing: FROM_EMAIL or TO_EMAIL not set');
     return { ok: false, error: 'Email configuration incomplete' };
   }
 
-  // Send email using MailChannels API for Cloudflare Email Routing
+  // Check if EMAIL binding is available
+  if (!env.EMAIL) {
+    console.error('EMAIL binding not configured in wrangler.toml');
+    return { ok: false, error: 'Email service not configured' };
+  }
+
   try {
-    const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        personalizations: [{
-          to: [{ email: env.TO_EMAIL }],
-          dkim_domain: 'flong.dev',
-          dkim_selector: 'mailchannels'
-        }],
-        from: {
-          email: env.FROM_EMAIL,
-          name: 'flong.dev Contact Form'
-        },
-        reply_to: {
-          email: data.email,
-          name: data.name 
-        },
-        subject: `New ${data.project} inquiry from ${data.name}`,
-        content: [
-          {
-            type: 'text/plain',
-            value: generateEmailText(data)
-          },
-          {
-            type: 'text/html',
-            value: generateEmailHTML(data)
-          }
-        ],
-        // Add additional configuration for MailChannels to properly route the email
-        mail_settings: {
-          bypass_list_management: true
-        },
-        tracking_settings: {
-          enabled: false
-        }
-      })
+    // Create MIME message using mimetext
+    const msg = createMimeMessage();
+    msg.setSender({ name: "flong.dev Contact Form", addr: env.FROM_EMAIL });
+    msg.setRecipient(env.TO_EMAIL);
+    msg.setSubject(`New ${data.project} inquiry from ${data.name}`);
+
+    // Set Reply-To header
+    msg.setHeader("Reply-To", `${data.name} <${data.email}>`);
+
+    // Add both plain text and HTML versions
+    msg.addMessage({
+      contentType: 'text/plain',
+      data: generateEmailText(data)
     });
 
-    if (response.ok) {
-      console.log('Email sent successfully via MailChannels');
-      return { ok: true };
-    } else {
-      const error = await response.text();
-      console.error('MailChannels API error:', response.status, error);
-      return { ok: false, error };
-    }
+    msg.addMessage({
+      contentType: 'text/html',
+      data: generateEmailHTML(data)
+    });
+
+    // Create EmailMessage using Cloudflare's Email API
+    const message = new EmailMessage(
+      env.FROM_EMAIL,
+      env.TO_EMAIL,
+      msg.asRaw()
+    );
+
+    // Send the email using the EMAIL binding
+    await env.EMAIL.send(message);
+
+    console.log('Email sent successfully via Cloudflare Email Workers');
+    return { ok: true };
   } catch (error) {
     console.error('Email sending error:', error);
     return { ok: false, error: error.message };
@@ -806,49 +796,6 @@ async function getActiveRequestCount(env) {
   }
 }
 
-async function sendViaMailChannels(env, message) {
-  // Fallback to MailChannels API
-  try {
-    const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        personalizations: [{
-          to: [{ email: message.to }]
-        }],
-        from: {
-          email: message.from,
-          name: 'flong.dev Contact Form'
-        },
-        subject: message.subject,
-        content: [
-          {
-            type: 'text/html',
-            value: message.html
-          },
-          {
-            type: 'text/plain',
-            value: message.text
-          }
-        ]
-      })
-    });
-
-    if (response.ok) {
-      console.log('Email sent successfully via MailChannels');
-      return { ok: true };
-    } else {
-      const errorText = await response.text();
-      console.error('MailChannels API error:', errorText);
-      return { ok: false };
-    }
-  } catch (error) {
-    console.error('MailChannels fallback error:', error);
-    return { ok: false };
-  }
-}
 
 function generateBookingHTML(data, bookingId) {
   const eventDate = new Date(data.date);

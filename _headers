@@ -1,7 +1,4 @@
 /*
-  # Rocket Loader for improved paint times with JavaScript
-  # Enables Cloudflare Rocket Loader to defer JavaScript loading
-  CF-RAY: enable_rocket_loader
   # Security Headers
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

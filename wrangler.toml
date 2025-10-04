@@ -1,7 +1,7 @@
 # Cloudflare Workers Configuration for flong.dev API
 name = "flong-dev-contact-form"
 main = "src/api-worker.js"
-compatibility_date = "2024-08-15"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # Routes - API endpoints on the domain (include both www and non-www)
@@ -44,5 +44,8 @@ binding = "CONTACTS"
 id = "5529065343fb411b9f3c9e5f8028520d"
 preview_id = "08df2d6a214145caa331366fb07d2240"
 
-# The send_email binding is not needed since we're using MailChannels API directly
-# MailChannels is configured through DNS settings for the domain
+# Send Email binding for Cloudflare Email Workers
+# This allows the worker to send emails through Cloudflare Email Routing
+[[send_email]]
+name = "EMAIL"
+destination_address = "hello@flong.dev"

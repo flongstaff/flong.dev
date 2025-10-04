@@ -451,6 +451,7 @@
             align-items: center;
             gap: 0.5rem;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari support */
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text);
@@ -459,6 +460,7 @@
         .lang-dots {
             display: flex;
             gap: 2px;
+            position: relative;
         }
 
         .lang-dot {
@@ -467,6 +469,7 @@
             border-radius: 50%;
             background: var(--text-muted);
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .lang-dot.active {
@@ -474,6 +477,174 @@
             width: 12px;
             border-radius: 2px;
         }
+
+        /* Animation for click effect */
+        .lang-dot.animate-click {
+            animation: langDotClick 0.4s ease;
+        }
+
+        @keyframes langDotClick {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); opacity: 0.8; }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Animation for expanding dots */
+        .lang-dot.expand {
+            animation: langDotExpand 0.5s ease forwards;
+        }
+
+        @keyframes langDotExpand {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(2.5); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Animation for expanding dots in sequence */
+        .lang-dot.expand-sequence-1 {
+            animation: langDotExpand 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+        }
+        .lang-dot.expand-sequence-2 {
+            animation: langDotExpand 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s forwards;
+        }
+        .lang-dot.expand-sequence-3 {
+            animation: langDotExpand 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards;
+        }
+        
+        /* Animation for dots when cycling languages */
+        .lang-dot.cycle {
+            animation: langDotCycle 0.4s ease;
+        }
+        
+        @keyframes langDotCycle {
+            0% { transform: scale(1); opacity: 1; }
+            25% { transform: scale(1.4); opacity: 0.9; background: var(--accent); }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Animation for dots when expanding */
+        @keyframes langDotExpand {
+            0% { 
+                transform: scale(1); 
+                opacity: 1; 
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+            }
+            50% { 
+                transform: scale(2.5); 
+                opacity: 0.7; 
+                width: 6px;
+                height: 6px;
+                border-radius: 2px;
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+            }
+        }
+
+        /* Animation for dropdown menu */
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
+            min-width: 140px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            transform-origin: top right;
+        }
+
+        .lang-dropdown.expand {
+            animation: dropdownExpand 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Enhanced dropdown expand animation */
+        @keyframes dropdownExpand {
+            0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
+            50% { opacity: 0.7; transform: translateY(0) scale(1.05); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Animation for language toggle */
+        .language-toggle {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible; /* Allow animations outside the button */
+        }
+
+        .language-toggle.animate-click {
+            animation: toggleClick 0.3s ease;
+        }
+
+        @keyframes toggleClick {
+            0% { transform: scale(1); }
+            25% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            75% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Animation for expanding toggle */
+        .language-toggle.expand-toggle {
+            animation: expandToggle 0.6s ease;
+        }
+
+        @keyframes expandToggle {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(0.9); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Animation for individual language selection */
+        .lang-option.animate-select {
+            animation: langSelect 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes langSelect {
+            0% { transform: scale(1); background: var(--bg-card); }
+            50% { transform: scale(0.95); background: var(--primary); color: white; }
+            100% { transform: scale(1); background: var(--bg-card); color: var(--text); }
+        }
+        
+        /* Animation for language options on hover when dropdown is open */
+        .lang-dropdown.active .lang-option {
+            transition: all 0.2s ease;
+        }
+        
+        .lang-dropdown.active .lang-option:hover {
+            transform: translateX(-5px);
+            background: var(--bg-card);
+        }
+        
+        /* Pulse animation for active state */
+        .lang-dot.active {
+            animation: langDotPulse 2s infinite;
+        }
+        
+        @keyframes langDotPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
 
         .language-toggle:hover {
             background: rgba(236, 72, 153, 0.1);
@@ -1603,7 +1774,178 @@
         .will-change-opacity {
             will-change: opacity;
         }
+        
+        /* Enhanced scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .scroll-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Fade in from left */
+        .scroll-animate.fade-left {
+            transform: translateX(-40px);
+        }
+        
+        .scroll-animate.fade-left.animate-in {
+            transform: translateX(0);
+        }
+        
+        /* Fade in from right */
+        .scroll-animate.fade-right {
+            transform: translateX(40px);
+        }
+        
+        .scroll-animate.fade-right.animate-in {
+            transform: translateX(0);
+        }
+        
+        /* Scale in animation */
+        .scroll-animate.scale-in {
+            transform: scale(0.8);
+        }
+        
+        .scroll-animate.scale-in.animate-in {
+            transform: scale(1);
+        }
+        
+        /* Slide up with scale */
+        .scroll-animate.slide-up {
+            transform: translateY(60px) scale(0.95);
+        }
+        
+        .scroll-animate.slide-up.animate-in {
+            transform: translateY(0) scale(1);
+        }
+        
+        /* Stagger animations */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hover-grow {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-grow:hover {
+            transform: scale(1.03);
+        }
+        
+        .hover-pulse {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-pulse:hover {
+            transform: scale(1.05);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Parallax effect */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Enhanced skills grid animation */
+        .skills-grid .skill-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .skills-grid .skill-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced project cards animation */
+        .projects-grid .project-card {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .projects-grid .project-card.animate-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Timeline item animation */
+        .timeline .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .timeline .timeline-item.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Button hover effects */
+        .btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            z-index: -1;
+            transition: transform 0.5s ease;
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+        
+        .btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* Header parallax effect */
+        header {
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
+
+    <!-- Animation Styles -->
+    <link rel="stylesheet" href="src/animations.css">
 </head>
 <body>
     <header>
@@ -1613,10 +1955,10 @@
                 flong.dev
             </a>
             <ul class="nav-links">
-                <li><a href="#skills" data-en="Services" data-es="Servicios" data-it="Servizi">Services</a></li>
-                <li><a href="#projects" data-en="Projects" data-es="Proyectos" data-it="Progetti">Projects</a></li>
-                <li><a href="#experience" data-en="Experience" data-es="Experiencia" data-it="Esperienza">Experience</a></li>
-                <li><a href="#contact" data-en="Contact" data-es="Contacto" data-it="Contatto">Contact</a></li>
+                <li><a href="#skills" class="hover-pulse" data-en="Services" data-es="Servicios" data-it="Servizi">Services</a></li>
+                <li><a href="#projects" class="hover-pulse" data-en="Projects" data-es="Proyectos" data-it="Progetti">Projects</a></li>
+                <li><a href="#experience" class="hover-pulse" data-en="Experience" data-es="Experiencia" data-it="Esperienza">Experience</a></li>
+                <li><a href="#contact" class="hover-pulse" data-en="Contact" data-es="Contacto" data-it="Contatto">Contact</a></li>
                 <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
                     <span class="theme-icon dark-icon">◐</span>
                     <span class="theme-icon light-icon">◯</span>
@@ -1653,23 +1995,23 @@
         <section class="hero">
             <div class="hero-bg"></div>
             <div class="hero-content">
-                <h1 data-en="IT Systems Administrator" data-es="Administrador de Sistemas IT" data-it="Amministratore di Sistemi IT">IT Systems Administrator</h1>
-                <p class="hero-subtitle" data-en="DevOps Expert & Web Administrator" data-es="Experto DevOps y Administrador Web" data-it="Esperto DevOps e Amministratore Web">DevOps Expert & Web Administrator</p>
-                <p class="hero-description" data-en="Specializing in system administration, cloud infrastructure, and IT support with expertise in Proxmox, Microsoft Azure, and enterprise network infrastructure management." data-es="Especializado en administración de sistemas, infraestructura en la nube y soporte IT con experiencia en Proxmox, Microsoft Azure y gestión de infraestructura de red empresarial." data-it="Specializzato in amministrazione di sistema, infrastruttura cloud e supporto IT con competenze in Proxmox, Microsoft Azure e gestione dell'infrastruttura di rete aziendale.">
+                <h1 class="scroll-animate fade-left" data-en="IT Systems Administrator" data-es="Administrador de Sistemas IT" data-it="Amministratore di Sistemi IT">IT Systems Administrator</h1>
+                <p class="hero-subtitle scroll-animate fade-left stagger-1" data-en="DevOps Expert & Web Administrator" data-es="Experto DevOps y Administrador Web" data-it="Esperto DevOps e Amministratore Web">DevOps Expert & Web Administrator</p>
+                <p class="hero-description scroll-animate fade-left stagger-2" data-en="Specializing in system administration, cloud infrastructure, and IT support with expertise in Proxmox, Microsoft Azure, and enterprise network infrastructure management." data-es="Especializado en administración de sistemas, infraestructura en la nube y soporte IT con experiencia en Proxmox, Microsoft Azure y gestión de infraestructura de red empresarial." data-it="Specializzato in amministrazione di sistema, infrastruttura cloud e supporto IT con competenze in Proxmox, Microsoft Azure e gestione dell'infrastruttura di rete aziendale.">
                     Specializing in system administration, cloud infrastructure, and IT support with expertise in 
                     Proxmox, Microsoft Azure, and enterprise network infrastructure management.
                 </p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary" data-en="Get In Touch" data-es="Contactame" data-it="Contattami">Get In Touch</a>
-                    <a href="#experience" class="btn btn-outline" data-en="View Experience" data-es="Ver Experiencia" data-it="Vedi Esperienza">View Experience</a>
+                <div class="cta-buttons scroll-animate fade-left stagger-3">
+                    <a href="#contact" class="btn btn-primary hover-lift" data-en="Get In Touch" data-es="Contactame" data-it="Contattami">Get In Touch</a>
+                    <a href="#experience" class="btn btn-outline hover-lift" data-en="View Experience" data-es="Ver Experiencia" data-it="Vedi Esperienza">View Experience</a>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="skills" data-lazy>
-            <h2 class="section-title" data-en="My Services" data-es="Mis Servicios" data-it="I Miei Servizi">My Services</h2>
+        <section id="skills" class="skills scroll-animate" data-parallax="0.3">
+            <h2 class="section-title scroll-animate" data-en="My Services" data-es="Mis Servicios" data-it="I Miei Servizi">My Services</h2>
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-card hover-grow">
                     <div class="skill-icon sysadmin">🖥️</div>
                     <h3 data-en="System Administration" data-es="Administración de Sistemas" data-it="Amministrazione di Sistema">System Administration</h3>
                     <div class="skill-list">
@@ -1680,7 +2022,7 @@
                     </div>
                 </div>
 
-                <div class="skill-card">
+                <div class="skill-card hover-grow">
                     <div class="skill-icon cloud">☁️</div>
                     <h3 data-en="Cloud & Platform" data-es="Nube y Plataforma" data-it="Cloud e Piattaforma">Cloud & Platform</h3>
                     <div class="skill-list">
@@ -1691,7 +2033,7 @@
                     </div>
                 </div>
 
-                <div class="skill-card">
+                <div class="skill-card hover-grow">
                     <div class="skill-icon devops">⚙️</div>
                     <h3 data-en="DevOps & Automation" data-es="DevOps y Automatización" data-it="DevOps e Automazione">DevOps & Automation</h3>
                     <div class="skill-list">
@@ -1702,7 +2044,7 @@
                     </div>
                 </div>
 
-                <div class="skill-card">
+                <div class="skill-card hover-grow">
                     <div class="skill-icon support">🛠️</div>
                     <h3 data-en="IT Support" data-es="Soporte IT" data-it="Supporto IT">IT Support</h3>
                     <div class="skill-list">
@@ -1715,10 +2057,10 @@
             </div>
         </section>
 
-        <section id="projects" class="projects" data-lazy>
+        <section id="projects" class="projects scroll-animate" data-parallax="0.2">
             <div class="projects-content">
                 <div class="projects-header">
-                    <h2 class="section-title" data-en="Key Projects" data-es="Proyectos Clave" data-it="Progetti Principali">Key Projects</h2>
+                    <h2 class="section-title scroll-animate" data-en="Key Projects" data-es="Proyectos Clave" data-it="Progetti Principali">Key Projects</h2>
                 </div>
 
                 <div class="projects-grid">
@@ -1921,9 +2263,9 @@
             </div>
         </section>
 
-        <section id="experience" class="experience" data-lazy>
+        <section id="experience" class="experience scroll-animate" data-parallax="0.1">
             <div class="experience-content">
-                <h2 class="section-title" data-en="Professional Experience" data-es="Experiencia Profesional" data-it="Esperienza Professionale">Professional Experience</h2>
+                <h2 class="section-title scroll-animate" data-en="Professional Experience" data-es="Experiencia Profesional" data-it="Esperienza Professionale">Professional Experience</h2>
                 <div class="timeline">
                     <div class="timeline-item">
                         <h3 class="job-title" data-en="Web Administrator / IT Support Officer" data-es="Administrador Web / Oficial de Soporte IT" data-it="Amministratore Web / Responsabile Supporto IT">Web Administrator / IT Support Officer</h3>
@@ -2007,9 +2349,9 @@
             </div>
         </section>
 
-        <section id="contact" class="contact" data-lazy>
+        <section id="contact" class="contact scroll-animate" data-parallax="0.1">
             <div class="contact-content">
-                <h2 class="section-title" data-en="Let's Work Together" data-es="Trabajemos Juntos" data-it="Lavoriamo Insieme">Let's Work Together</h2>
+                <h2 class="section-title scroll-animate" data-en="Let's Work Together" data-es="Trabajemos Juntos" data-it="Lavoriamo Insieme">Let's Work Together</h2>
                 <p data-en="Ready to optimize your IT infrastructure? I'm available for consulting, system administration, and DevOps projects. Let's discuss how I can help streamline your operations." data-es="¿Listo para optimizar tu infraestructura IT? Estoy disponible para consultoría, administración de sistemas y proyectos DevOps. Conversemos sobre cómo puedo ayudar a optimizar tus operaciones." data-it="Pronto a ottimizzare la tua infrastruttura IT? Sono disponibile per consulenza, amministrazione di sistema e progetti DevOps. Discutiamo come posso aiutarti a semplificare le tue operazioni.">
                     Ready to optimize your IT infrastructure? I'm available for consulting, system administration, 
                     and DevOps projects. Let's discuss how I can help streamline your operations.
@@ -2048,7 +2390,7 @@
                             
                             <div class="form-group">
                                 <label for="message" data-en="Project Details" data-es="Detalles del Proyecto" data-it="Dettagli Progetto">Project Details</label>
-                                <textarea id="message" name="message" rows="5" required data-placeholder-en="Tell me about your project, timeline, and any specific requirements..." data-placeholder-es="Contáme sobre tu proyecto, cronograma y requisitos específicos..." data-placeholder-it="Raccontami del tuo progetto, tempistica e requisiti specifici..." placeholder="Tell me about your project, timeline, and any specific requirements..."></textarea>
+                                <textarea id="message" name="message" rows="5" required data-placeholder-en="Tell me about your project, timeline, and any specific requirements..." data-placeholder-es="Cuéntame sobre tu proyecto, cronograma y requisitos específicos..." data-placeholder-it="Raccontami del tuo progetto, tempistica e requisiti specifici..." placeholder="Tell me about your project, timeline, and any specific requirements..."></textarea>
                             </div>
                             
                             <button type="submit" class="btn btn-primary btn-submit">
@@ -2195,6 +2537,14 @@
         // Language toggle functionality
         const languageToggle = document.getElementById('languageToggle');
         const currentLang = document.getElementById('currentLang');
+        const langDropdown = document.getElementById('langDropdown');
+        const langDots = document.querySelectorAll('.lang-dot');
+        const langOptions = document.querySelectorAll('.lang-option');
+        
+        // State for tracking clicks
+        let clickCount = 0;
+        let clickTimer = null;
+        let isExpanded = false;
         
         // Initialize language based on saved preference or default to English
         function initializeLanguage() {
@@ -2203,6 +2553,7 @@
             document.documentElement.setAttribute('lang', savedLanguage === 'es' ? 'es-AR' : 'en-AU');
             updateLanguageIcon(savedLanguage);
             updateContent(savedLanguage);
+            updateActiveLanguageDot(savedLanguage);
         }
         
         // Update language icon
@@ -2211,6 +2562,18 @@
             const languages = { 'en': 'EN', 'es': 'ES', 'it': 'IT' };
             if (currentLang) {
                 currentLang.textContent = languages[language] || 'EN';
+            }
+        }
+
+        // Update active language dot
+        function updateActiveLanguageDot(language) {
+            // Remove active class from all dots
+            langDots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active class to current language dot
+            const activeDot = document.querySelector(`.lang-dot[data-lang="${language}"]`);
+            if (activeDot) {
+                activeDot.classList.add('active');
             }
         }
 
@@ -2253,6 +2616,22 @@
             localStorage.setItem('language', newLanguage);
             updateLanguageIcon(newLanguage);
             updateContent(newLanguage);
+            updateActiveLanguageDot(newLanguage);
+
+            // Add animation to the selected language dot
+            const selectedDot = document.querySelector(`.lang-dot[data-lang="${newLanguage}"]`);
+            if (selectedDot) {
+                selectedDot.classList.add('cycle');
+                setTimeout(() => {
+                    selectedDot.classList.remove('cycle');
+                }, 400);
+            }
+            
+            // Add animation to the language toggle button
+            languageToggle.classList.add('animate-click');
+            setTimeout(() => {
+                languageToggle.classList.remove('animate-click');
+            }, 300);
 
             // Track language change for analytics if available
             if (typeof gtag !== 'undefined') {
@@ -2263,8 +2642,113 @@
             }
         }
         
-        // Event listener for language toggle
-        languageToggle.addEventListener('click', toggleLanguage);
+        // Expand the language selector
+        function expandLanguageSelector() {
+            // Add animations to the dots
+            langDots.forEach((dot, index) => {
+                dot.classList.add(`expand-sequence-${index + 1}`);
+                setTimeout(() => {
+                    dot.classList.remove(`expand-sequence-${index + 1}`);
+                }, 600);
+            });
+            
+            // Add animation to the toggle button
+            languageToggle.classList.add('expand-toggle');
+            setTimeout(() => {
+                languageToggle.classList.remove('expand-toggle');
+            }, 600);
+            
+            // Show the dropdown with animation
+            langDropdown.classList.add('active', 'expand');
+            isExpanded = true;
+            
+            // Track language expand for analytics if available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'language_expand', {
+                    'event_category': 'engagement',
+                    'event_label': 'language_selector_expanded'
+                });
+            }
+        }
+        
+        // Collapse the language selector
+        function collapseLanguageSelector() {
+            langDropdown.classList.remove('active', 'expand');
+            isExpanded = false;
+        }
+        
+        // Handle language selection
+        function selectLanguage(lang) {
+            document.documentElement.setAttribute('data-language', lang);
+            document.documentElement.setAttribute('lang',
+                lang === 'es' ? 'es-AR' :
+                lang === 'it' ? 'it-IT' : 'en-AU'
+            );
+            localStorage.setItem('language', lang);
+            updateLanguageIcon(lang);
+            updateContent(lang);
+            updateActiveLanguageDot(lang);
+            
+            // Add animation to the selected option
+            const selectedOption = document.querySelector(`.lang-option[data-lang="${lang}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('animate-select');
+                setTimeout(() => {
+                    selectedOption.classList.remove('animate-select');
+                }, 300);
+            }
+            
+            // Collapse the dropdown
+            collapseLanguageSelector();
+            
+            // Track language selection for analytics if available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'language_change', {
+                    'event_category': 'engagement',
+                    'event_label': lang
+                });
+            }
+        }
+        
+        // Click handler for single/double click detection
+        function handleLanguageToggleClick() {
+            clickCount++;
+            
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => {
+                    // Single click - cycle through languages
+                    toggleLanguage();
+                    clickCount = 0;
+                }, 300);
+            } else if (clickCount === 2) {
+                // Double click - expand language selector
+                clearTimeout(clickTimer);
+                if (isExpanded) {
+                    collapseLanguageSelector();
+                } else {
+                    expandLanguageSelector();
+                }
+                clickCount = 0;
+            }
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!languageToggle.contains(event.target) && !langDropdown.contains(event.target)) {
+                collapseLanguageSelector();
+            }
+        });
+        
+        // Event listeners for language toggle
+        languageToggle.addEventListener('click', handleLanguageToggleClick);
+        
+        // Event listeners for language options
+        langOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                const lang = e.currentTarget.getAttribute('data-lang');
+                selectLanguage(lang);
+            });
+        });
         
         // Initialize language on page load
         initializeLanguage();
@@ -2345,6 +2829,89 @@
                 console.error('Lazy loading initialization error:', error);
             }
         }
+        
+        // Enhanced scroll animations with Intersection Observer
+        function initializeScrollAnimations() {
+            try {
+                const scrollElements = document.querySelectorAll('.scroll-animate, .skills-grid .skill-card, .projects-grid .project-card, .timeline .timeline-item');
+                
+                if (!scrollElements.length) return;
+                
+                if ('IntersectionObserver' in window) {
+                    const elementObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const element = entry.target;
+                                element.classList.add('animate-in');
+                                
+                                // Unobserve after animation for performance
+                                elementObserver.unobserve(element);
+                            }
+                        });
+                    }, {
+                        rootMargin: '0px 0px -50px 0px', // Trigger when element is 50px from bottom of viewport
+                        threshold: 0.1
+                    });
+
+                    scrollElements.forEach(element => {
+                        if (element) {
+                            elementObserver.observe(element);
+                        }
+                    });
+                } else {
+                    // Fallback - add animation classes immediately
+                    scrollElements.forEach(element => {
+                        if (element) {
+                            element.classList.add('animate-in');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Scroll animation initialization error:', error);
+            }
+        }
+        
+        // Enhanced header scroll effect
+        function initializeHeaderScrollEffect() {
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Parallax effect for background elements
+        function initializeParallaxEffects() {
+            const parallaxElements = document.querySelectorAll('.parallax-bg');
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5; // Adjust the multiplier for different parallax speed
+                
+                parallaxElements.forEach(element => {
+                    element.style.backgroundPositionY = rate + 'px';
+                });
+            });
+        }
+        
+        // Enhanced parallax for specific elements
+        function initializeElementParallax() {
+            const parallaxElements = document.querySelectorAll('[data-parallax]');
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                
+                parallaxElements.forEach(element => {
+                    const speed = element.getAttribute('data-parallax') || 0.5;
+                    const yPos = -(scrolled * speed);
+                    element.style.transform = `translateY(${yPos}px)`;
+                });
+            });
+        }
 
         // Performance monitoring
         function initializePerformanceMonitoring() {
@@ -2401,6 +2968,10 @@
 
         // Initialize performance features
         initializeLazyLoading();
+        initializeScrollAnimations();
+        initializeHeaderScrollEffect();
+        initializeParallaxEffects();
+        initializeElementParallax();
         initializePerformanceMonitoring();
 
         // Contact form functionality
@@ -2472,5 +3043,8 @@
 
     <!-- Multilingual i18n System -->
     <script src="src/i18n/i18n.js"></script>
+
+    <!-- Scroll Animations -->
+    <script src="src/animations.js"></script>
 </body>
 </html>

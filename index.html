@@ -2191,7 +2191,7 @@
 
         // Language toggle functionality
         const languageToggle = document.getElementById('languageToggle');
-        const languageIcon = document.getElementById('languageIcon');
+        const currentLang = document.getElementById('currentLang');
         
         // Initialize language based on saved preference or default to English
         function initializeLanguage() {
@@ -2204,10 +2204,11 @@
         
         // Update language icon
         function updateLanguageIcon(language) {
-            // The icon should show what language will be selected NEXT
-            // Current language -> Icon shows next language
-            const languages = { 'en': 'ES', 'es': 'IT', 'it': 'EN' };
-            languageIcon.textContent = languages[language] || 'EN';
+            // Update current language display
+            const languages = { 'en': 'EN', 'es': 'ES', 'it': 'IT' };
+            if (currentLang) {
+                currentLang.textContent = languages[language] || 'EN';
+            }
         }
 
         // Update content based on language

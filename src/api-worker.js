@@ -560,8 +560,7 @@ async function sendEmail(env, data) {
     msg.setRecipient(env.TO_EMAIL);
     msg.setSubject(`New ${data.project} inquiry from ${data.name}`);
 
-    // Set Reply-To header
-    msg.setHeader("Reply-To", `${data.name} <${data.email}>`);
+    // Note: Reply-To is included in email body - user email is: ${data.email}
 
     // Add both plain text and HTML versions
     msg.addMessage({

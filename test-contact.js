@@ -1,48 +1,50 @@
-// Test the contact form endpoint using URLSearchParams for form data
-async function testContactForm() {
-    // Create form data as URLSearchParams (works with form submissions)
-    const params = new URLSearchParams();
-    params.append('name', 'Test User');
-    params.append('email', 'test@example.com');
-    params.append('company', 'Test Company');
-    params.append('project', 'website');
-    params.append('message', 'This is a test message to verify the email functionality is working properly.');
-    
-    try {
-        const response = await fetch('http://127.0.0.1:8787/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: params
-        });
-        
-        const result = await response.json();
-        console.log('Response status:', response.status);
-        console.log('Response body:', result);
-        
-        if (response.status === 200 && result.success) {
-            console.log('✅ Contact form submission successful!');
-        } else {
-            console.log('❌ Contact form submission failed!');
-        }
-    } catch (error) {
-        console.error('Error testing contact form:', error);
-    }
+#!/usr/bin/env node
+
+/**
+ * Test script to send a contact form submission
+ * Usage: node test-contact.js [local|production]
+ */
+
+const env = process.argv[2] || 'local';
+
+const urls = {
+  local: 'http://localhost:59478/api/contact',
+  production: 'https://flong.dev/api/contact'
+};
+
+const url = urls[env];
+
+if (!url) {
+  console.error('Invalid environment. Use: node test-contact.js [local|production]');
+  process.exit(1);
 }
 
-// Test the health endpoint
-async function testHealthEndpoint() {
-    try {
-        const response = await fetch('http://127.0.0.1:8787/health');
-        const result = await response.json();
-        console.log('Health endpoint response:', result);
-    } catch (error) {
-        console.error('Error testing health endpoint:', error);
-    }
-}
+console.log(`🧪 Testing email submission to: ${env}`);
+console.log(`📧 URL: ${url}\n`);
 
-// Run the tests
-console.log('Testing local development server...');
-testHealthEndpoint();
-setTimeout(testContactForm, 1000);  // Wait a bit before testing contact form
+const formData = new FormData();
+formData.append('name', 'Test User - Email Test');
+formData.append('email', 'test@example.com');
+formData.append('company', 'Test Company');
+formData.append('project', 'general');
+formData.append('message', 'This is a test email from the contact form test script. If you receive this, the email routing is working correctly!');
+
+fetch(url, {
+  method: 'POST',
+  body: formData
+})
+  .then(async response => {
+    console.log(`Status: ${response.status} ${response.statusText}`);
+    const data = await response.json();
+    console.log('Response:', JSON.stringify(data, null, 2));
+
+    if (response.ok) {
+      console.log('\n✅ Email submission successful!');
+      console.log('📬 Check hello@flong.dev (franco.longstaff@gmail.com) for the email');
+    } else {
+      console.log('\n❌ Email submission failed!');
+    }
+  })
+  .catch(error => {
+    console.error('❌ Error:', error.message);
+  });

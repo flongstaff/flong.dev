@@ -66,7 +66,7 @@ class I18n {
    */
   applyLanguage(lang) {
     this.currentLang = lang;
-    
+
     // Update HTML lang attribute
     document.documentElement.setAttribute('lang', lang);
     document.documentElement.setAttribute('data-language', lang);
@@ -75,7 +75,16 @@ class I18n {
     document.querySelectorAll('[data-' + lang + ']').forEach(el => {
       const translation = el.getAttribute('data-' + lang);
       if (translation) {
-        el.textContent = translation;
+        // Special handling for option elements
+        if (el.tagName === 'OPTION') {
+          el.textContent = translation;
+          // If this option is currently selected, update the select display
+          if (el.selected && el.parentElement) {
+            el.parentElement.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        } else {
+          el.textContent = translation;
+        }
       }
     });
 

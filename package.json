@@ -5,13 +5,16 @@
   "main": "index.html",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "tail": "wrangler tail",
     "test": "echo \"No tests required for static site\" && exit 0",
     "lint": "echo \"No linting required for static site\" && exit 0",
-    "build": "echo \"Static site - no build required\" && exit 0"
+    "build": "node build.js",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.44.0",
     "wrangler": "^4.42.0"
   },
   "keywords": [

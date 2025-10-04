@@ -622,12 +622,35 @@ async function isRateLimited(env, key, limit) {
 
 async function isSpam(data) {
   // Enhanced spam detection logic
-  const spamKeywords = ['crypto', 'bitcoin', 'forex', 'casino', 'pills'];
+  const spamKeywords = [
+    'viagra', 'cialis', 'pills', 'pharmacy',
+    'crypto', 'bitcoin', 'forex', 'casino', 'gambling',
+    'lottery', 'prize', 'winner', 'congratulations',
+    'click here', 'buy now', 'act now', 'limited time',
+    'make money', 'work from home', 'million dollars'
+  ];
+
   const message = data.message.toLowerCase();
-  
-  return spamKeywords.some(keyword => message.includes(keyword)) ||
-         data.message.length < 10 ||
-         !data.email.includes('@');
+  const name = data.name.toLowerCase();
+  const fullText = `${name} ${message}`;
+
+  // Check for spam keywords
+  const hasSpamKeyword = spamKeywords.some(keyword => fullText.includes(keyword));
+
+  // Check for excessive punctuation (!!!, $$$, etc.)
+  const excessivePunctuation = /(\!{3,}|\${3,}|\?{3,})/.test(data.message);
+
+  // Check for too many URLs
+  const urlCount = (data.message.match(/https?:\/\//gi) || []).length;
+  const tooManyUrls = urlCount > 2;
+
+  // Message too short (less than 10 chars after the validation passed)
+  const tooShort = data.message.length < 10;
+
+  // Invalid email (should already be caught by validation, but double-check)
+  const invalidEmail = !data.email.includes('@');
+
+  return hasSpamKeyword || excessivePunctuation || tooManyUrls || tooShort || invalidEmail;
 }
 
 async function sendEmail(env, data) {

@@ -192,24 +192,20 @@
             scroll-behavior: smooth;
         }
         
-        /* Scroll snap implementation */
+        /* Smooth scroll behavior only - removed scroll snap to prevent flickering */
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y mandatory;
         }
         
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
-            scroll-snap-type: y mandatory;
         }
         
-        /* Apply to main sections */
+        /* Removed scroll snapping to prevent flickering */
         section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            min-height: 100vh; /* Ensure sections fill viewport for proper snapping */
+            min-height: 100vh; /* Maintain section height for navigation */
         }
         
         /* Adjustments for sections that might be shorter than viewport */
@@ -218,7 +214,7 @@
             height: auto;
         }
         
-        /* Make sure content fits properly in snap areas */
+        /* Make sure content fits properly in navigation */
         .skills, .projects, .experience, .contact {
             min-height: 100vh;
             padding-top: 80px; /* Account for fixed header */
@@ -226,7 +222,7 @@
         }
         
         /* Navigation active state */
-        nav a.active {
+        .nav-links a.active {
             background: rgba(236, 72, 153, 0.2);
             border-color: var(--primary);
             color: var(--primary);
@@ -3007,28 +3003,9 @@
         initializeParallaxEffects();
         initializeElementParallax();
         initializePerformanceMonitoring();
-        initializeScrollSnap();
 
-        // Enhanced scroll snapping functionality
-        function initializeScrollSnap() {
-            // Ensure smooth scrolling works with snap
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return; // Skip if href is just "#"
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        // Use smooth scrolling to target section
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-            
+        // Navigation highlighting functionality
+        function initializeNavigationHighlight() {
             // Handle scroll events for navigation highlighting
             let ticking = false;
             function updateNavigationHighlight() {
@@ -3063,6 +3040,8 @@
             // Initialize navigation highlighting
             updateNavigationHighlight();
         }
+        
+        initializeNavigationHighlight();
 
         // Contact form functionality
         document.addEventListener('DOMContentLoaded', function() {

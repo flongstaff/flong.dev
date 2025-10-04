@@ -31,10 +31,9 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), screen-wake-lock=(), web-share=()',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  'Cross-Origin-Embedder-Policy': 'require-corp',
-  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
   'Cross-Origin-Resource-Policy': 'cross-origin',
-  'Content-Security-Policy': `default-src 'self'; script-src 'self' 'unsafe-inline' ${TRUSTED_DOMAINS.filter(d => d.includes('google') || d.includes('cloudflare') || d.includes('clarity')).join(' ')} static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' ${TRUSTED_DOMAINS.join(' ')}; frame-ancestors 'none'; upgrade-insecure-requests;`
+  'Content-Security-Policy': `default-src 'self'; script-src 'self' 'unsafe-inline' ${TRUSTED_DOMAINS.filter(d => d.includes('google') || d.includes('cloudflare') || d.includes('clarity')).join(' ')} https://static.cloudflareinsights.com https://*.zaraz.com https://*.cloudflareinsights.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' ${TRUSTED_DOMAINS.join(' ')} https://*.cloudflareinsights.com https://*.zaraz.com; frame-ancestors 'none'; upgrade-insecure-requests;`
 };
 
 // Input validation patterns for security

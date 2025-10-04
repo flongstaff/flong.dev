@@ -2421,18 +2421,20 @@
                             method: 'POST',
                             body: formData
                         });
-                        
+
+                        const result = await response.json();
+
                         if (!response.ok) {
-                            throw new Error('Form submission failed');
+                            throw new Error(result.error || 'Form submission failed');
                         }
-                        
+
                         // Hide form and show success message
                         form.style.display = 'none';
                         const successElement = document.getElementById('formSuccess');
                         if (successElement) {
                             successElement.classList.add('show');
                         }
-                        
+
                         // Track form submission for analytics if available
                         if (typeof gtag !== 'undefined') {
                             gtag('event', 'contact_form_submit', {
@@ -2440,11 +2442,14 @@
                                 'event_label': formData.get('project')
                             });
                         }
-                        
+
                     } catch (error) {
                         console.error('Form submission error:', error);
-                        alert('There was an error sending your message. Please try again or contact me directly at hello@flong.dev');
-                        
+                        const errorMessage = error.message === 'Failed to fetch'
+                            ? 'Network error. Please check your connection and try again.'
+                            : error.message || 'There was an error sending your message.';
+                        alert(errorMessage + '\n\nYou can also contact me directly at hello@flong.dev');
+
                         // Track form error
                         if (typeof gtag !== 'undefined') {
                             gtag('event', 'form_error', {
@@ -2452,7 +2457,7 @@
                                 'event_label': 'contact_form_error'
                             });
                         }
-                        
+
                         // Reset button state
                         submitBtn.classList.remove('loading');
                         submitBtn.disabled = false;

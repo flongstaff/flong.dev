@@ -191,11 +191,45 @@
         html {
             scroll-behavior: smooth;
         }
-
+        
+        /* Scroll snap implementation */
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+        
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            scroll-snap-type: y mandatory;
+        }
+        
+        /* Apply to main sections */
+        section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 100vh; /* Ensure sections fill viewport for proper snapping */
+        }
+        
+        /* Adjustments for sections that might be shorter than viewport */
+        .hero {
+            min-height: 100vh;
+            height: auto;
+        }
+        
+        /* Make sure content fits properly in snap areas */
+        .skills, .projects, .experience, .contact {
+            min-height: 100vh;
+            padding-top: 80px; /* Account for fixed header */
+            padding-bottom: 80px;
+        }
+        
+        /* Navigation active state */
+        nav a.active {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         img {
@@ -1992,7 +2026,7 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="home">
             <div class="hero-bg"></div>
             <div class="hero-content">
                 <h1 class="scroll-animate fade-left" data-en="IT Systems Administrator" data-es="Administrador de Sistemas IT" data-it="Amministratore di Sistemi IT">IT Systems Administrator</h1>
@@ -2973,6 +3007,62 @@
         initializeParallaxEffects();
         initializeElementParallax();
         initializePerformanceMonitoring();
+        initializeScrollSnap();
+
+        // Enhanced scroll snapping functionality
+        function initializeScrollSnap() {
+            // Ensure smooth scrolling works with snap
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return; // Skip if href is just "#"
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Use smooth scrolling to target section
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Handle scroll events for navigation highlighting
+            let ticking = false;
+            function updateNavigationHighlight() {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        const sections = document.querySelectorAll('section[id]');
+                        const scrollPos = window.scrollY + window.innerHeight / 2;
+                        
+                        sections.forEach(section => {
+                            const sectionTop = section.offsetTop;
+                            const sectionHeight = section.offsetHeight;
+                            
+                            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                                // Highlight the active navigation link
+                                document.querySelectorAll('nav a').forEach(link => {
+                                    link.classList.remove('active');
+                                    if (link.getAttribute('href') === `#${section.id}`) {
+                                        link.classList.add('active');
+                                    }
+                                });
+                            }
+                        });
+                        
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            window.addEventListener('scroll', updateNavigationHighlight);
+            
+            // Initialize navigation highlighting
+            updateNavigationHighlight();
+        }
 
         // Contact form functionality
         document.addEventListener('DOMContentLoaded', function() {

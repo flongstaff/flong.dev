@@ -3,8 +3,21 @@
 # Query Analytics Script for flong.dev
 # Usage: ./query-analytics.sh [query_type]
 
-ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-your_account_id}"
-API_TOKEN="${CLOUDFLARE_API_TOKEN:-your_api_token}"
+# Check if required environment variables are set
+if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+  echo "Error: CLOUDFLARE_ACCOUNT_ID environment variable is not set"
+  echo "Please set it with: export CLOUDFLARE_ACCOUNT_ID=\"your_account_id\""
+  exit 1
+fi
+
+if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+  echo "Error: CLOUDFLARE_API_TOKEN environment variable is not set"
+  echo "Please set it with: export CLOUDFLARE_API_TOKEN=\"your_api_token\""
+  exit 1
+fi
+
+ACCOUNT_ID="$CLOUDFLARE_ACCOUNT_ID"
+API_TOKEN="$CLOUDFLARE_API_TOKEN"
 DATASET="flong_dev_metrics"
 
 # Colors for output
@@ -19,10 +32,10 @@ QUERY_TYPE="${1:-summary}"
 
 case $QUERY_TYPE in
   summary)
-    QUERY="SELECT 
+    QUERY="SELECT
       blob1 AS endpoint,
       blob2 AS method,
-      COUNT(*) AS requests,
+      COUNT() AS requests,
       AVG(double1) AS avg_response_time,
       SUM(double2) AS successful_requests,
       SUM(double3) AS rate_limited_requests
@@ -34,12 +47,12 @@ case $QUERY_TYPE in
     ;;
     
   contact)
-    QUERY="SELECT 
+    QUERY="SELECT
       blob2 AS project_type,
       blob3 AS has_company,
       blob4 AS email_status,
       blob5 AS country,
-      COUNT(*) AS submissions,
+      COUNT() AS submissions,
       AVG(double2) AS avg_message_length,
       SUM(double3) AS successful_emails
     FROM ${DATASET}
@@ -50,9 +63,9 @@ case $QUERY_TYPE in
     ;;
     
   countries)
-    QUERY="SELECT 
+    QUERY="SELECT
       blob3 AS country,
-      COUNT(*) AS requests,
+      COUNT() AS requests,
       AVG(double1) AS avg_response_time
     FROM ${DATASET}
     WHERE timestamp > NOW() - INTERVAL '24' HOUR
@@ -62,10 +75,10 @@ case $QUERY_TYPE in
     ;;
     
   errors)
-    QUERY="SELECT 
+    QUERY="SELECT
       blob1 AS endpoint,
       blob4 AS status,
-      COUNT(*) AS error_count,
+      COUNT() AS error_count,
       AVG(double1) AS avg_response_time
     FROM ${DATASET}
     WHERE double2 = 0
@@ -75,9 +88,9 @@ case $QUERY_TYPE in
     ;;
     
   performance)
-    QUERY="SELECT 
+    QUERY="SELECT
       blob1 AS endpoint,
-      COUNT(*) AS requests,
+      COUNT() AS requests,
       AVG(double1) AS avg_ms,
       MIN(double1) AS min_ms,
       MAX(double1) AS max_ms
@@ -99,7 +112,6 @@ echo -e "${GREEN}Query: ${QUERY_TYPE}${NC}\n"
 # Execute query using Cloudflare API
 curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/analytics_engine/sql" \
   -H "Authorization: Bearer ${API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d "{\"query\": \"${QUERY}\"}" | jq .
+  -d "${QUERY}" | jq .
 
 echo -e "\n${BLUE}Query completed!${NC}"

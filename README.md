@@ -12,7 +12,7 @@ A modern, responsive portfolio showcasing my expertise in IT systems administrat
 
 - **Modern Design**: Clean, professional interface with dark/light mode toggle
 - **Fully Responsive**: Optimized for all devices from mobile to desktop
-- **High Performance**: Fast loading with optimized assets and lazy loading
+- **High Performance**: Fast loading with **optimized** assets and lazy loading
 - **SEO Optimized**: Complete meta tags, sitemap, and structured data
 - **Working Contact Form**: Real-time email notifications via Cloudflare Workers
 - **Professional Focus**: Showcases real IT projects and achievements
@@ -64,35 +64,48 @@ wrangler deploy
 
 ```
 
-## 📊 Project Structure
+## 📊 Analytics Setup
 
-```
-flong.dev/
-├── index.html              # Main portfolio page
-├── src/
-│   └── index.js            # Cloudflare Worker for contact form
-├── _headers                # Cloudflare Pages security headers
-├── _redirects              # URL redirects configuration  
-├── robots.txt              # Search engine instructions
-├── sitemap.xml             # Site structure for SEO
-├── package.json            # Worker dependencies
-└── wrangler.toml           # Cloudflare Worker configuration
-```
+To query analytics data from your Cloudflare Analytics Engine:
 
-## 🌟 Live Features
+1. Get your Cloudflare Account ID from the [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Create an API token with "Account Analytics Read" permissions
+3. Set environment variables:
+   ```bash
+   export CLOUDFLARE_ACCOUNT_ID="your_account_id"
+   export CLOUDFLARE_API_TOKEN="your_api_token"
+   ```
 
-- **Professional Portfolio**: Showcasing real IT projects and achievements
-- **Interactive Contact Form**: Direct email notifications to franco.longstaff@gmail.com
-- **Theme Toggle**: Seamless dark/light mode with system preference detection
-- **Responsive Layout**: Perfect display on all screen sizes
-- **SEO Optimized**: Structured data and meta tags for search visibility
+4. Run queries:
+   ```bash
+   # Get summary of last 24 hours
+   ./query-analytics.sh summary
+   
+   # Get contact form submissions (last 7 days)
+   ./query-analytics.sh contact
+   
+   # Get geographic distribution
+   ./query-analytics.sh countries
+   
+   # Get error statistics
+   ./query-analytics.sh errors
+   
+   # Get performance metrics (last hour)
+   ./query-analytics.sh performance
+   ```
 
-## 📈 Performance Metrics
-
-- **Lighthouse Score**: 95+ across all categories
-- **Page Load**: < 1 second first paint
-- **99.9% Uptime**: Reliable Cloudflare infrastructure
-- **Global CDN**: Fast delivery worldwide
+5. For security best practices, you can also use a .env file:
+   ```bash
+   # Create .env file in project root
+   echo 'CLOUDFLARE_ACCOUNT_ID="your_account_id"' > .env
+   echo 'CLOUDFLARE_API_TOKEN="your_api_token"' >> .env
+   
+   # Source the environment variables
+   source .env
+   
+   # Or run queries with environment variables set inline
+   CLOUDFLARE_ACCOUNT_ID="your_account_id" CLOUDFLARE_API_TOKEN="your_api_token" ./query-analytics.sh summary
+   ```
 
 ## 💼 Professional Contact
 
